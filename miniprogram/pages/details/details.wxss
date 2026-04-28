@@ -10,12 +10,16 @@
 }
 
 .filter-tab {
+  display: flex;
   flex: 1;
-  min-height: 68rpx;
+  height: 68rpx;
   border-radius: 999rpx;
+  align-items: center;
+  justify-content: center;
   color: #6F745C;
   font-size: 26rpx;
   font-weight: 800;
+  line-height: 68rpx;
 }
 
 .filter-tab.active {
@@ -97,4 +101,3 @@
   color: #8A7B63;
   font-size: 24rpx;
 }
-
