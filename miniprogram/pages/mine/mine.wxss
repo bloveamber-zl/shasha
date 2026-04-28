@@ -1,0 +1,83 @@
+.profile-card {
+  display: flex;
+  padding: 30rpx;
+  align-items: center;
+}
+
+.profile-image {
+  width: 200rpx;
+  height: 200rpx;
+  flex: none;
+}
+
+.profile-copy {
+  margin-left: 26rpx;
+}
+
+.profile-title {
+  display: block;
+  color: #344032;
+  font-size: 42rpx;
+  font-weight: 900;
+}
+
+.profile-desc {
+  display: block;
+  margin-top: 10rpx;
+  color: #8A7B63;
+  font-size: 25rpx;
+}
+
+.cloud-pill {
+  display: inline-block;
+  margin-top: 20rpx;
+  padding: 12rpx 18rpx;
+  border-radius: 999rpx;
+  color: #4F6D45;
+  font-size: 23rpx;
+  font-weight: 800;
+  background: #E9F3E2;
+}
+
+.menu-list {
+  padding: 8rpx 24rpx;
+}
+
+.menu-item {
+  display: flex;
+  padding: 26rpx 0;
+  border-bottom: 2rpx solid rgba(115, 93, 58, 0.08);
+  align-items: center;
+}
+
+.menu-item:last-child {
+  border-bottom: 0;
+}
+
+.menu-icon {
+  width: 72rpx;
+  height: 72rpx;
+  border-radius: 24rpx;
+  font-size: 36rpx;
+  line-height: 72rpx;
+  text-align: center;
+  background: rgba(112, 133, 87, 0.12);
+}
+
+.menu-copy {
+  margin-left: 20rpx;
+}
+
+.menu-title {
+  display: block;
+  color: #344032;
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.menu-desc {
+  display: block;
+  margin-top: 8rpx;
+  color: #8A7B63;
+  font-size: 24rpx;
+}

@@ -1,0 +1,66 @@
+<view class="page ledger-page">
+  <view class="amount-panel paper-card">
+    <view class="type-tabs">
+      <button
+        wx:for="{{typeTabs}}"
+        wx:key="value"
+        class="type-tab {{activeType === item.value ? 'active' : ''}}"
+        bindtap="onTypeTap"
+        data-type="{{item.value}}"
+      >
+        {{item.label}}
+      </button>
+    </view>
+    <view class="amount-input-row">
+      <text class="currency">¥</text>
+      <input class="amount-input" type="digit" value="{{amountText}}" placeholder="0.00" bindinput="onAmountInput" />
+    </view>
+  </view>
+
+  <view class="section-title">
+    <text>分类</text>
+    <text class="muted">{{activeCategory}}</text>
+  </view>
+  <view class="category-grid">
+    <button
+      wx:for="{{categories}}"
+      wx:key="id"
+      class="category-item {{activeCategory === item.name ? 'active' : ''}}"
+      bindtap="onCategoryTap"
+      data-name="{{item.name}}"
+    >
+      <text class="category-icon">{{item.icon}}</text>
+      <text class="category-name">{{item.name}}</text>
+    </button>
+  </view>
+
+  <view class="form-card paper-card">
+    <picker mode="selector" range="{{accounts}}" value="{{accountIndex}}" bindchange="onAccountChange">
+      <view class="form-row">
+        <text>账户</text>
+        <text class="form-value">{{accounts[accountIndex]}}</text>
+      </view>
+    </picker>
+    <picker mode="date" value="{{date}}" bindchange="onDateChange">
+      <view class="form-row">
+        <text>日期</text>
+        <text class="form-value">{{date}}</text>
+      </view>
+    </picker>
+    <view class="note-row">
+      <text>备注</text>
+      <textarea value="{{note}}" auto-height maxlength="40" placeholder="写点什么，月底会感谢你" bindinput="onNoteInput" />
+    </view>
+  </view>
+
+  <button class="primary-button save-button" bindtap="saveRecord">记好了</button>
+
+  <view class="success-card paper-card" wx:if="{{lastSaved}}">
+    <image src="{{successImage}}" class="success-image" mode="aspectFit" />
+    <view class="success-copy">
+      <text class="success-title">刚刚记录</text>
+      <text class="success-text">{{lastSaved.category}} · {{lastSaved.account}} · {{lastSaved.date}}</text>
+    </view>
+  </view>
+</view>
+

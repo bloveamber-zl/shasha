@@ -1,0 +1,47 @@
+<view class="page details-page">
+  <view class="filter-card paper-card">
+    <view class="type-filter">
+      <button
+        wx:for="{{typeTabs}}"
+        wx:key="value"
+        class="filter-tab {{activeType === item.value ? 'active' : ''}}"
+        bindtap="onTypeTap"
+        data-type="{{item.value}}"
+      >
+        {{item.label}}
+      </button>
+    </view>
+    <picker mode="selector" range="{{categoryNames}}" value="{{categoryIndex}}" bindchange="onCategoryChange">
+      <view class="category-filter">
+        <text>分类筛选</text>
+        <text>{{categoryNames[categoryIndex]}}</text>
+      </view>
+    </picker>
+  </view>
+
+  <view class="empty-card paper-card" wx:if="{{groups.length === 0}}">
+    <image class="empty-image" src="/assets/images/forest-guardian.png" mode="aspectFit" />
+    <text class="empty-title">这片森林还没有账单</text>
+    <text class="empty-desc">换个筛选条件，或先去记一笔。</text>
+  </view>
+
+  <view class="date-group" wx:for="{{groups}}" wx:key="date">
+    <view class="section-title">
+      <text>{{item.date}}</text>
+      <text class="muted">{{item.records.length}} 笔</text>
+    </view>
+    <view class="record-list paper-card">
+      <view class="record-item" wx:for="{{item.records}}" wx:for-item="record" wx:key="id">
+        <view>
+          <text class="record-title">{{record.category}}</text>
+          <text class="record-note">{{record.note || record.account}}</text>
+        </view>
+        <view class="record-side">
+          <text class="{{record.amountClass}} record-amount">{{record.displayAmount}}</text>
+          <text class="record-account">{{record.account}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+

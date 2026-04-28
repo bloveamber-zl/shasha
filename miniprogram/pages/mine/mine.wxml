@@ -1,0 +1,26 @@
+<view class="page mine-page">
+  <view class="profile-card paper-card">
+    <image class="profile-image" src="{{guardianImage}}" mode="aspectFit" />
+    <view class="profile-copy">
+      <text class="profile-title">沙沙记账</text>
+      <text class="profile-desc">原创森林守护灵主题</text>
+      <text class="cloud-pill">{{cloudReady ? '云开发已就绪' : '等待配置云环境'}}</text>
+    </view>
+  </view>
+
+  <view class="section-title">
+    <text>账本设置</text>
+    <text class="muted">第一版</text>
+  </view>
+
+  <view class="menu-list paper-card">
+    <view class="menu-item" wx:for="{{menuItems}}" wx:key="title">
+      <text class="menu-icon">{{item.icon}}</text>
+      <view class="menu-copy">
+        <text class="menu-title">{{item.title}}</text>
+        <text class="menu-desc">{{item.desc}}</text>
+      </view>
+    </view>
+  </view>
+</view>
+

@@ -1,0 +1,230 @@
+{
+  "project": "沙沙记账小程序",
+  "last_updated": "2026-04-28",
+  "rules": {
+    "single_active_feature": true,
+    "passing_requires_evidence": true,
+    "do_not_skip_verification": true,
+    "protect_cloud_secrets": true
+  },
+  "status_legend": {
+    "not_started": "功能还没开始做。",
+    "in_progress": "这个功能是当前唯一正在进行的任务。",
+    "blocked": "因为已记录的阻塞问题，当前无法继续推进。",
+    "passing": "要求的验证已经通过，并且证据已经记录。"
+  },
+  "features": [
+    {
+      "id": "scaffold-20260428-001",
+      "priority": 1,
+      "area": "foundation",
+      "title": "初始化微信小程序与云开发工程骨架",
+      "desc": [
+        "创建微信小程序基础结构，包括 project.config.json、miniprogram/、cloudfunctions/ 和必要的 npm 配置。",
+        "配置云开发环境占位说明，避免提交 AppSecret、私钥或生产环境敏感配置。",
+        "建立首页、基础路由、全局样式和最小可运行页面。",
+        "限制范围：只做工程骨架和最小启动，不实现完整记账业务。"
+      ],
+      "user_visible_behavior": "开发者可以用微信开发者工具导入项目，编译后看到沙沙记账小程序的基础首页。",
+      "status": "passing",
+      "verification": [
+        "运行 ./init.sh",
+        "用微信开发者工具导入 /Users/Lin/project/shasha",
+        "确认 project.config.json 识别成功",
+        "确认小程序可以编译并显示基础首页",
+        "确认云开发环境配置说明存在，且未提交敏感密钥"
+      ],
+      "evidence": [
+        "2026-04-28: 已创建 project.config.json，配置 miniprogramRoot=miniprogram/、cloudfunctionRoot=cloudfunctions/。",
+        "2026-04-28: 已创建 miniprogram/app.js、app.json、app.wxss、sitemap.json 和 5 个 tab 页面：首页、记账、图表、明细、我的。",
+        "2026-04-28: 已创建 cloudfunctions/initUser、ledgerQuery、ledgerWrite 云函数占位，实现用户初始化、账单查询、账单创建/删除的基础鉴权和参数校验。",
+        "2026-04-28: 已新增 package.json、scripts/validate-project.js 和 tests/ledger.test.js，支持本地结构校验和账本核心工具测试。",
+        "2026-04-28: ./init.sh 通过，包含项目结构校验和 6 个 Node 测试。",
+        "2026-04-28: 用户反馈已在微信开发者工具中导入项目，并成功编译运行。"
+      ],
+      "notes": "工程骨架、本地验证和微信开发者工具导入编译已完成；未提交任何 AppSecret、私钥或生产敏感配置。"
+    },
+    {
+      "id": "ui-theme-20260428-007",
+      "priority": 2,
+      "area": "ui/theme",
+      "title": "实现森林守护灵账本主题页面风格",
+      "desc": [
+        "主题方向：以温暖手绘森林、原创圆润森林守护灵、米白纸感账本、苔藓绿和橡果棕为核心视觉。",
+        "覆盖页面：首页、记账页、图表页、明细页、我的页，形成完整小程序第一版视觉骨架。",
+        "素材要求：使用 imagegen 生成项目素材，避免直接复刻现有动画角色或特定在世艺术家画风。",
+        "组件要求：沉淀收支摘要卡、快捷入口、流水列表、分类图标、图表卡、空状态、成功反馈等基础 UI。",
+        "限制范围：先做可运行的静态/半静态体验和本地 mock 数据，不在本任务中完成真实云端业务闭环。"
+      ],
+      "user_visible_behavior": "用户打开小程序后能看到统一的森林守护灵记账主题，并可浏览首页、记账、图表、明细和我的页面。",
+      "status": "passing",
+      "verification": [
+        "运行 ./init.sh",
+        "用微信开发者工具导入项目并编译",
+        "确认首页、记账页、图表页、明细页、我的页均可访问",
+        "确认 imagegen 生成的素材已保存到 miniprogram/assets/images/ 并被页面引用",
+        "确认页面无明显文字溢出、遮挡或空白素材"
+      ],
+      "evidence": [
+        "2026-04-28: 已使用内置 image_gen 生成 3 张原创森林守护灵主题素材，并复制到 miniprogram/assets/images/forest-header.png、forest-guardian.png、ledger-success.png。",
+        "2026-04-28: 首页已接入森林账本 header、月度收入/支出/结余卡片、快捷入口、最近流水和守护灵提示。",
+        "2026-04-28: 记账页已实现收支切换、金额输入、分类选择、账户/日期/备注和保存成功反馈。",
+        "2026-04-28: 图表页已实现森林观察板、最近支出趋势和分类占比条形图。",
+        "2026-04-28: 明细页已实现收支类型和分类筛选、日期分组流水列表、空状态。",
+        "2026-04-28: 我的页已实现守护灵头像、云开发状态和账本设置入口。",
+        "2026-04-28: ./init.sh 通过，包含项目结构校验和 6 个 Node 测试。",
+        "2026-04-28: 用户反馈已在微信开发者工具中导入项目，并成功编译运行。",
+        "2026-04-28: 用户提供 5 张页面截图完成视觉验收：首页、记账页、图表页、明细页、我的页。",
+        "2026-04-28: 记账页分类卡片错位和底部遮挡问题已修复。",
+        "2026-04-28: 记账页顶部支出/收入 tab 文字垂直居中问题已修复。",
+        "2026-04-28: 用户确认修复后视觉验收可以通过。"
+      ],
+      "notes": "主题页面、本地代码、素材接入、微信开发者工具编译运行和人工截图视觉验收均已完成。主题保持原创森林守护灵设定，不直接使用龙猫、宫崎骏或吉卜力等受保护视觉元素。"
+    },
+    {
+      "id": "visual-20260428-008",
+      "priority": 3,
+      "area": "quality/visual",
+      "title": "接入小程序自动化视觉冒烟验收",
+      "desc": [
+        "使用 miniprogram-automator 驱动微信开发者工具自动打开核心页面。",
+        "自动访问首页、记账页、图表页、明细页、我的页并保存截图。",
+        "截图保存到 tests/visual/screenshots/，用于人工快速复核明显白屏、素材缺失、布局崩坏。",
+        "限制范围：当前阶段只做冒烟截图和非空检查，不做像素级 baseline diff。"
+      ],
+      "user_visible_behavior": "开发者可以运行 npm run visual:smoke 自动生成 5 个核心页面截图，用于视觉验收。",
+      "status": "blocked",
+      "verification": [
+        "运行 npm install",
+        "确认微信开发者工具 -> 设置 -> 安全 -> 服务端口 已开启",
+        "运行 npm run visual:smoke",
+        "确认 tests/visual/screenshots/ 下生成 5 张非空截图",
+        "人工快速检查截图中没有白屏、素材缺失或明显布局崩坏"
+      ],
+      "evidence": [
+        "2026-04-28: 已新增 scripts/visual-smoke.js、scripts/visual-smoke-core.js 和 tests/visual-smoke-core.test.js。",
+        "2026-04-28: 已新增 npm scripts：visual:smoke、visual:smoke:debug。",
+        "2026-04-28: 已安装 miniprogram-automator，并生成 package-lock.json。",
+        "2026-04-28: 已确认 miniprogram-automator@0.12.1 内置 launch 使用旧参数 --auto-port；当前微信开发者工具 CLI auto 命令使用 --port。脚本已改为直接调用 CLI auto --port 后再 automator.connect。",
+        "2026-04-28: npm test 通过，包含 12 个 Node 测试。",
+        "2026-04-28: ./init.sh 通过。",
+        "2026-04-28: npm run visual:smoke 仍阻塞于微信开发者工具服务端口未开启；CLI debug 明确提示需要开启 设置 -> 安全 -> 服务端口。"
+      ],
+      "notes": "需要用户在微信开发者工具中手动开启服务端口后重跑 npm run visual:smoke。CLI 提示输入 y 尝试开启后仍超时等待 IDE port，因此以手动设置为准。"
+    },
+    {
+      "id": "cloud-20260428-002",
+      "priority": 4,
+      "area": "cloud",
+      "title": "建立云数据库与云函数基础能力",
+      "desc": [
+        "设计并记录核心集合：users、categories、accounts、ledger_records、budgets、tags。",
+        "实现基础云函数：获取用户上下文、初始化用户数据、创建/更新/删除记账记录、查询统计摘要。",
+        "补齐参数校验、用户归属校验、错误返回和幂等边界。",
+        "限制范围：只建立后端基础能力，不做复杂图表页面。"
+      ],
+      "user_visible_behavior": "用户数据按微信身份隔离，记账记录可安全写入和查询。",
+      "status": "not_started",
+      "verification": [
+        "运行 ./init.sh",
+        "本地或云端调用初始化用户数据云函数",
+        "创建一条收入记录和一条支出记录",
+        "确认数据库记录带有用户归属字段",
+        "用非法参数调用云函数，确认返回可理解错误"
+      ],
+      "evidence": [],
+      "notes": "权限规则和云函数鉴权必须一起验证。"
+    },
+    {
+      "id": "ledger-20260428-003",
+      "priority": 5,
+      "area": "ledger",
+      "title": "实现每日记账核心流程",
+      "desc": [
+        "实现新增、编辑、删除、列表查看记账记录。",
+        "记录字段至少包含金额、收支类型、分类、账户、日期、标签、备注。",
+        "支持快速选择今天、昨天和自定义日期。",
+        "限制范围：先保证核心 CRUD 稳定，不急于做复杂统计。"
+      ],
+      "user_visible_behavior": "用户可以每天快速记录收入或支出，并在列表中查看、修改和删除。",
+      "status": "not_started",
+      "verification": [
+        "运行 ./init.sh",
+        "在微信开发者工具新增一条今日支出",
+        "编辑该记录的金额和分类",
+        "删除该记录并确认列表刷新",
+        "刷新小程序后确认数据持久化状态正确"
+      ],
+      "evidence": [],
+      "notes": "金额处理避免浮点误差，建议以分为单位存储。"
+    },
+    {
+      "id": "charts-20260428-004",
+      "priority": 6,
+      "area": "charts",
+      "title": "实现收支图表展示",
+      "desc": [
+        "按日、周、月展示收入、支出、结余趋势。",
+        "按分类展示支出占比和收入占比。",
+        "为空数据、单条数据、大量数据提供稳定展示。",
+        "限制范围：使用已存在记账数据，不在本任务中扩展预算或导出。"
+      ],
+      "user_visible_behavior": "用户可以通过图表直观看到近期收支趋势和分类占比。",
+      "status": "not_started",
+      "verification": [
+        "运行 ./init.sh",
+        "准备至少 30 天样例记账数据",
+        "查看日/周/月趋势图",
+        "查看分类占比图",
+        "确认空数据状态和单条数据状态展示正常"
+      ],
+      "evidence": [],
+      "notes": "统计口径需要和云函数/前端展示保持一致。"
+    },
+    {
+      "id": "insight-20260428-005",
+      "priority": 7,
+      "area": "insight",
+      "title": "实现多维度观察与筛选",
+      "desc": [
+        "支持按日期区间、分类、账户、标签、收支类型筛选。",
+        "支持查看维度摘要：总收入、总支出、结余、最大支出分类、日均支出。",
+        "支持从摘要跳转到明细列表。",
+        "限制范围：先做分析观察，不做 AI 建议或复杂预测。"
+      ],
+      "user_visible_behavior": "用户可以从不同维度观察自己的消费结构和变化。",
+      "status": "not_started",
+      "verification": [
+        "运行 ./init.sh",
+        "准备跨分类、跨账户、跨标签样例数据",
+        "分别按日期、分类、账户、标签筛选",
+        "确认摘要数字和明细列表一致",
+        "确认筛选条件清空后恢复全量视图"
+      ],
+      "evidence": [],
+      "notes": "筛选条件和统计结果要可复现，避免前后端口径分裂。"
+    },
+    {
+      "id": "quality-20260428-006",
+      "priority": 8,
+      "area": "quality",
+      "title": "完善测试、发布与数据安全工作流",
+      "desc": [
+        "接入 lint、单元测试、云函数测试和 miniprogram-ci 预览或上传流程。",
+        "补齐数据库权限规则检查和敏感配置检查。",
+        "记录发布前手工验收清单。",
+        "限制范围：只做质量和发布工作流，不新增业务功能。"
+      ],
+      "user_visible_behavior": "每次发布前都有稳定验证路径，降低数据丢失和权限错误风险。",
+      "status": "not_started",
+      "verification": [
+        "运行 VERIFY_MODE=full ./init.sh",
+        "确认 lint/test/miniprogram-ci 至少有一种自动化验证接入",
+        "确认云函数测试覆盖成功和失败输入",
+        "确认发布前手工验收清单可执行"
+      ],
+      "evidence": [],
+      "notes": "等核心业务初步成型后再做，避免过早搭复杂流程。"
+    }
+  ]
+}

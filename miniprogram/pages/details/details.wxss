@@ -1,0 +1,100 @@
+.filter-card {
+  padding: 18rpx;
+}
+
+.type-filter {
+  display: flex;
+  padding: 8rpx;
+  border-radius: 999rpx;
+  background: rgba(107, 139, 89, 0.12);
+}
+
+.filter-tab {
+  flex: 1;
+  min-height: 68rpx;
+  border-radius: 999rpx;
+  color: #6F745C;
+  font-size: 26rpx;
+  font-weight: 800;
+}
+
+.filter-tab.active {
+  color: #FFFFFF;
+  background: #5EA56B;
+}
+
+.category-filter {
+  display: flex;
+  padding: 26rpx 12rpx 8rpx;
+  color: #344032;
+  font-size: 28rpx;
+  font-weight: 700;
+  justify-content: space-between;
+}
+
+.record-list {
+  padding: 8rpx 24rpx;
+}
+
+.record-item {
+  display: flex;
+  padding: 24rpx 0;
+  border-bottom: 2rpx solid rgba(115, 93, 58, 0.08);
+  justify-content: space-between;
+}
+
+.record-item:last-child {
+  border-bottom: 0;
+}
+
+.record-title {
+  display: block;
+  color: #344032;
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.record-note,
+.record-account {
+  display: block;
+  margin-top: 8rpx;
+  color: #8A7B63;
+  font-size: 23rpx;
+}
+
+.record-side {
+  text-align: right;
+}
+
+.record-amount {
+  display: block;
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.empty-card {
+  display: flex;
+  margin-top: 28rpx;
+  padding: 38rpx;
+  align-items: center;
+  flex-direction: column;
+}
+
+.empty-image {
+  width: 260rpx;
+  height: 260rpx;
+}
+
+.empty-title {
+  margin-top: 18rpx;
+  color: #344032;
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.empty-desc {
+  margin-top: 10rpx;
+  color: #8A7B63;
+  font-size: 24rpx;
+}
+

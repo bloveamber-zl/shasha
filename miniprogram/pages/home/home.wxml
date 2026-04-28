@@ -1,0 +1,61 @@
+<view class="page home-page">
+  <view class="hero paper-card">
+    <image class="hero-bg" src="{{headerImage}}" mode="aspectFill" />
+    <view class="hero-content">
+      <text class="hero-kicker">森林守护灵账本</text>
+      <text class="hero-title">今天也把钱花明白</text>
+      <text class="hero-subtitle">{{cloudReady ? '云开发已就绪' : '本地预览模式'}}</text>
+    </view>
+  </view>
+
+  <view class="summary-grid">
+    <forest-card
+      wx:for="{{summaryCards}}"
+      wx:key="label"
+      label="{{item.label}}"
+      value="{{item.value}}"
+      foot="{{item.foot}}"
+      tone="{{item.tone}}"
+    />
+  </view>
+
+  <view class="quick-grid">
+    <button class="quick-action" bindtap="goTab" data-url="/pages/ledger/ledger">
+      <text class="quick-icon">✍️</text>
+      <text class="quick-title">记一笔</text>
+      <text class="quick-desc">快速记录今天</text>
+    </button>
+    <button class="quick-action" bindtap="goTab" data-url="/pages/charts/charts">
+      <text class="quick-icon">📊</text>
+      <text class="quick-title">看图表</text>
+      <text class="quick-desc">观察收支变化</text>
+    </button>
+  </view>
+
+  <view class="section-title">
+    <text>最近流水</text>
+    <text class="muted">最近 4 笔</text>
+  </view>
+
+  <view class="record-list paper-card">
+    <view class="record-item" wx:for="{{recentRecords}}" wx:key="id">
+      <view class="record-main">
+        <text class="record-title">{{item.category}}</text>
+        <text class="record-note">{{item.note || item.account}}</text>
+      </view>
+      <view class="record-side">
+        <text class="{{item.amountClass}} record-amount">{{item.displayAmount}}</text>
+        <text class="record-date">{{item.date}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="guardian-card paper-card">
+    <image class="guardian" src="{{guardianImage}}" mode="aspectFit" />
+    <view class="guardian-copy">
+      <text class="guardian-title">小守护灵提示</text>
+      <text class="guardian-text">每天记 1 分钟，月底复盘会轻松很多。</text>
+    </view>
+  </view>
+</view>
+

@@ -1,0 +1,156 @@
+.amount-panel {
+  padding: 28rpx;
+}
+
+.type-tabs {
+  display: flex;
+  padding: 8rpx;
+  border-radius: 999rpx;
+  background: rgba(107, 139, 89, 0.12);
+}
+
+.type-tab {
+  display: flex;
+  flex: 1;
+  height: 70rpx;
+  border-radius: 999rpx;
+  align-items: center;
+  justify-content: center;
+  color: #6F745C;
+  font-size: 28rpx;
+  font-weight: 800;
+  line-height: 70rpx;
+}
+
+.type-tab.active {
+  color: #FFFFFF;
+  background: #5EA56B;
+  box-shadow: 0 10rpx 24rpx rgba(70, 139, 94, 0.2);
+}
+
+.amount-input-row {
+  display: flex;
+  margin-top: 34rpx;
+  align-items: center;
+}
+
+.currency {
+  color: #5B674E;
+  font-size: 42rpx;
+  font-weight: 900;
+}
+
+.amount-input {
+  min-height: 104rpx;
+  margin-left: 16rpx;
+  color: #2E3A2D;
+  font-size: 68rpx;
+  font-weight: 900;
+}
+
+.category-grid {
+  display: flex;
+  margin: 0 -8rpx;
+  flex-wrap: wrap;
+}
+
+.category-item {
+  display: flex;
+  width: 31.333%;
+  min-height: 132rpx;
+  margin-right: 1%;
+  margin-left: 1%;
+  margin-bottom: 18rpx;
+  border-radius: 26rpx;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 251, 239, 0.84);
+  box-shadow: 0 12rpx 26rpx rgba(78, 94, 61, 0.08);
+}
+
+.category-item.active {
+  border: 3rpx solid #70AE72;
+  background: #F1FAEF;
+}
+
+.category-icon {
+  font-size: 42rpx;
+}
+
+.category-name {
+  margin-top: 10rpx;
+  color: #536048;
+  font-size: 24rpx;
+  font-weight: 700;
+}
+
+.form-card {
+  padding: 8rpx 24rpx;
+}
+
+.form-row,
+.note-row {
+  display: flex;
+  padding: 28rpx 0;
+  border-bottom: 2rpx solid rgba(115, 93, 58, 0.08);
+  color: #344032;
+  font-size: 28rpx;
+  font-weight: 700;
+  justify-content: space-between;
+}
+
+.note-row {
+  display: block;
+  border-bottom: 0;
+}
+
+.form-value {
+  color: #8A7B63;
+  font-weight: 500;
+}
+
+textarea {
+  width: 100%;
+  min-height: 92rpx;
+  margin-top: 20rpx;
+  color: #344032;
+  font-size: 28rpx;
+  line-height: 1.5;
+}
+
+.save-button {
+  margin-top: 28rpx;
+  margin-bottom: 28rpx;
+}
+
+.success-card {
+  display: flex;
+  margin-top: 26rpx;
+  padding: 18rpx 22rpx;
+  align-items: center;
+}
+
+.success-image {
+  width: 142rpx;
+  height: 142rpx;
+  flex: none;
+}
+
+.success-copy {
+  margin-left: 18rpx;
+}
+
+.success-title {
+  display: block;
+  color: #344032;
+  font-size: 30rpx;
+  font-weight: 800;
+}
+
+.success-text {
+  display: block;
+  margin-top: 10rpx;
+  color: #8A7B63;
+  font-size: 24rpx;
+}

@@ -1,0 +1,36 @@
+.forest-card {
+  display: flex;
+  min-height: 172rpx;
+  padding: 24rpx;
+  border: 2rpx solid rgba(112, 133, 87, 0.14);
+  border-radius: 26rpx;
+  flex-direction: column;
+  justify-content: space-between;
+  background: rgba(255, 251, 239, 0.88);
+  box-shadow: 0 14rpx 32rpx rgba(78, 94, 61, 0.09);
+}
+
+.label {
+  color: #7E735F;
+  font-size: 24rpx;
+}
+
+.value {
+  color: #344032;
+  font-size: 38rpx;
+  font-weight: 800;
+}
+
+.foot {
+  color: #9A8F77;
+  font-size: 22rpx;
+}
+
+.income .value {
+  color: #329081;
+}
+
+.expense .value {
+  color: #DD7657;
+}
+

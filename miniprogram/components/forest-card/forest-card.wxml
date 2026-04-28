@@ -1,0 +1,6 @@
+<view class="forest-card {{tone}}">
+  <text class="label">{{label}}</text>
+  <text class="value">{{value}}</text>
+  <text class="foot">{{foot}}</text>
+</view>
+
