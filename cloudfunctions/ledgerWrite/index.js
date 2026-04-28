@@ -5,16 +5,12 @@ cloud.init({
 });
 
 const db = cloud.database();
-
-function validateRecord(record) {
-  if (!record || typeof record !== 'object') return 'INVALID_RECORD';
-  if (record.type !== 'income' && record.type !== 'expense') return 'INVALID_TYPE';
-  if (!Number.isInteger(record.amountCents) || record.amountCents <= 0) return 'INVALID_AMOUNT';
-  if (!record.category) return 'MISSING_CATEGORY';
-  if (!record.account) return 'MISSING_ACCOUNT';
-  if (!/^\d{4}-\d{2}-\d{2}$/.test(record.date || '')) return 'INVALID_DATE';
-  return '';
-}
+const {
+  buildCreateData,
+  buildUpdateData,
+  canAccessRecord,
+  validateRecord
+} = require('./ledger-write-core');
 
 exports.main = async (event = {}) => {
   const wxContext = cloud.getWXContext();
@@ -39,18 +35,56 @@ exports.main = async (event = {}) => {
       };
     }
 
-    const result = await db.collection('ledger_records').add({
-      data: {
-        ...event.record,
-        openid,
-        createdAt: now,
-        updatedAt: now
-      }
-    });
+    const data = buildCreateData(event.record, openid, now);
+    const result = await db.collection('ledger_records').add({ data });
 
     return {
       ok: true,
-      id: result._id
+      id: result._id,
+      createdAt: now,
+      updatedAt: now,
+      record: {
+        _id: result._id,
+        ...data
+      }
+    };
+  }
+
+  if (action === 'update') {
+    if (!event.id) {
+      return {
+        ok: false,
+        error: 'MISSING_ID'
+      };
+    }
+
+    const existing = await db.collection('ledger_records').doc(event.id).get();
+    if (!canAccessRecord(existing.data, openid)) {
+      return {
+        ok: false,
+        error: 'NOT_FOUND'
+      };
+    }
+
+    const error = validateRecord(event.record);
+    if (error) {
+      return {
+        ok: false,
+        error
+      };
+    }
+
+    const data = buildUpdateData(event.record, now);
+    await db.collection('ledger_records').doc(event.id).update({ data });
+    return {
+      ok: true,
+      id: event.id,
+      updatedAt: now,
+      record: {
+        ...existing.data,
+        ...data,
+        _id: event.id
+      }
     };
   }
 
@@ -63,7 +97,7 @@ exports.main = async (event = {}) => {
     }
 
     const existing = await db.collection('ledger_records').doc(event.id).get();
-    if (!existing.data || existing.data.openid !== openid) {
+    if (!canAccessRecord(existing.data, openid)) {
       return {
         ok: false,
         error: 'NOT_FOUND'
@@ -81,4 +115,3 @@ exports.main = async (event = {}) => {
     error: 'UNSUPPORTED_ACTION'
   };
 };
-

@@ -124,7 +124,7 @@
         "限制范围：只建立后端基础能力，不做复杂图表页面。"
       ],
       "user_visible_behavior": "用户数据按微信身份隔离，记账记录可安全写入和查询。",
-      "status": "not_started",
+      "status": "blocked",
       "verification": [
         "运行 ./init.sh",
         "本地或云端调用初始化用户数据云函数",
@@ -132,8 +132,18 @@
         "确认数据库记录带有用户归属字段",
         "用非法参数调用云函数，确认返回可理解错误"
       ],
-      "evidence": [],
-      "notes": "权限规则和云函数鉴权必须一起验证。"
+      "evidence": [
+        "2026-04-28: 已新增 miniprogram/utils/cloud-ledger-core.js 和 cloud-ledger.js，封装云端账单 payload、记录归一化、云状态文案、initUser/ledgerQuery/ledgerWrite 调用。",
+        "2026-04-28: 已更新 miniprogram/app.js，启动时初始化云开发、调用 initUser 与 ledgerQuery，云端不可用时回落到本地预览数据。",
+        "2026-04-28: 已更新记账页保存流程，新增账单时优先调用 ledgerWrite 云函数，失败时保留本地预览写入。",
+        "2026-04-28: 已更新首页、图表页、明细页、我的页，进入页面前等待云端数据加载，并在首页/我的页展示云同步状态。",
+        "2026-04-28: 已扩展 cloudfunctions/ledgerWrite，支持 create/update/delete，写入前校验参数，更新/删除前校验 openid 归属。",
+        "2026-04-28: 已新增 docs/cloud-deployment.md，记录集合创建、云函数部署、手工验收和已知边界。",
+        "2026-04-28: npm test 通过，20 个 Node 测试全部通过。",
+        "2026-04-28: npm run lint 通过，项目结构校验通过。",
+        "2026-04-28: ./init.sh 通过，包含 JSON/结构校验、lint 和 20 个 Node 测试。"
+      ],
+      "notes": "代码链路和本地测试已完成；仍需在微信云开发环境创建集合、部署云函数并验证数据库权限和真实 openid 写入后，才能标记为 passing。"
     },
     {
       "id": "ledger-20260428-003",

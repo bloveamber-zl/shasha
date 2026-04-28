@@ -4,7 +4,7 @@
     <view class="profile-copy">
       <text class="profile-title">沙沙记账</text>
       <text class="profile-desc">原创森林守护灵主题</text>
-      <text class="cloud-pill">{{cloudReady ? '云开发已就绪' : '等待配置云环境'}}</text>
+      <text class="cloud-pill">{{cloudStatusLabel}}</text>
     </view>
   </view>
 
@@ -23,4 +23,3 @@
     </view>
   </view>
 </view>
-

@@ -29,3 +29,15 @@
 - 查询统一经过 `ledgerQuery` 云函数。
 - 后续接入真实环境时，数据库权限规则必须限制用户只能访问自己的 `openid` 数据。
 
+## 云函数
+
+- `initUser`：根据当前微信上下文初始化或更新用户访问时间。
+- `ledgerQuery`：按当前 `openid` 查询账单，支持 `type`、`category`、`startDate`、`endDate`。
+- `ledgerWrite`：支持 `create`、`update`、`delete`，写入前校验参数，更新/删除前校验记录归属。
+
+## 客户端策略
+
+- 小程序启动时调用 `initUser` 和 `ledgerQuery`。
+- 云函数调用成功后，页面使用云端 `ledger_records`。
+- 云函数不可用、未部署或权限错误时，自动回落到本地 mock 数据，并在首页/我的页显示“云同步失败，已使用本地数据”。
+

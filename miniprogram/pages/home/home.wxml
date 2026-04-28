@@ -4,7 +4,7 @@
     <view class="hero-content">
       <text class="hero-kicker">森林守护灵账本</text>
       <text class="hero-title">今天也把钱花明白</text>
-      <text class="hero-subtitle">{{cloudReady ? '云开发已就绪' : '本地预览模式'}}</text>
+      <text class="hero-subtitle">{{cloudStatusLabel}}</text>
     </view>
   </view>
 
@@ -58,4 +58,3 @@
     </view>
   </view>
 </view>
-

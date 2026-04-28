@@ -18,8 +18,9 @@ Page({
     lastSaved: null
   },
 
-  onLoad() {
+  async onLoad() {
     const app = getApp();
+    await app.ensureCloudData();
     this.setData({
       accounts: app.globalData.accounts || []
     });
@@ -73,7 +74,7 @@ Page({
     });
   },
 
-  saveRecord() {
+  async saveRecord() {
     const amountCents = parseYuanToCents(this.data.amountText);
 
     if (!amountCents || amountCents <= 0) {
@@ -95,9 +96,15 @@ Page({
       note: this.data.note
     });
 
-    app.globalData.records = [record].concat(app.globalData.records || []);
+    wx.showLoading({
+      title: '记录中'
+    });
+
+    const savedRecord = await app.saveLedgerRecord(record);
+    wx.hideLoading();
+
     this.setData({
-      lastSaved: record,
+      lastSaved: savedRecord,
       amountText: '',
       note: ''
     });
@@ -108,4 +115,3 @@ Page({
     });
   }
 });
-

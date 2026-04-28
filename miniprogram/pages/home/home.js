@@ -10,7 +10,9 @@ Page({
     recentRecords: []
   },
 
-  onShow() {
+  async onShow() {
+    const app = getApp();
+    await app.ensureCloudData();
     this.refresh();
   },
 
@@ -31,6 +33,7 @@ Page({
 
     this.setData({
       cloudReady: app.globalData.cloudReady,
+      cloudStatusLabel: app.globalData.cloudStatus.label,
       summaryCards: [
         { label: '本月收入', value: formatted.income, foot: '橡果入账', tone: 'income' },
         { label: '本月支出', value: formatted.expense, foot: '森林花销', tone: 'expense' },
@@ -46,4 +49,3 @@ Page({
     });
   }
 });
-

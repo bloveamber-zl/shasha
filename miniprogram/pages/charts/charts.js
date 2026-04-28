@@ -59,8 +59,9 @@ Page({
     trend: []
   },
 
-  onShow() {
+  async onShow() {
     const app = getApp();
+    await app.ensureCloudData();
     const records = app.globalData.records || [];
     this.setData({
       summary: formatSummary(summarizeRecords(records)),

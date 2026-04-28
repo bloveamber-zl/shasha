@@ -14,8 +14,9 @@ Page({
     groups: []
   },
 
-  onShow() {
+  async onShow() {
     const app = getApp();
+    await app.ensureCloudData();
     const categoryNames = ['全部'].concat((app.globalData.categories || []).map((item) => item.name));
     this.setData({
       categoryNames
@@ -55,4 +56,3 @@ Page({
     });
   }
 });
-

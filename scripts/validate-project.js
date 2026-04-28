@@ -43,12 +43,16 @@ requireFile('project.config.json');
 requireFile('miniprogram/app.json');
 requireFile('miniprogram/app.js');
 requireFile('miniprogram/app.wxss');
+requireFile('miniprogram/utils/cloud-ledger.js');
+requireFile('miniprogram/utils/cloud-ledger-core.js');
 requireFile('miniprogram/assets/images/forest-header.png');
 requireFile('miniprogram/assets/images/forest-guardian.png');
 requireFile('miniprogram/assets/images/ledger-success.png');
 requireFile('cloudfunctions/initUser/index.js');
 requireFile('cloudfunctions/ledgerQuery/index.js');
 requireFile('cloudfunctions/ledgerWrite/index.js');
+requireFile('cloudfunctions/ledgerWrite/ledger-write-core.js');
+requireFile('docs/cloud-deployment.md');
 
 const projectConfig = readJson('project.config.json');
 const appConfig = readJson('miniprogram/app.json');
@@ -81,4 +85,3 @@ if (process.exitCode) {
 }
 
 console.log('项目结构校验通过');
-
