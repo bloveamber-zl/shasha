@@ -66,6 +66,12 @@ function walkFiles(dir, predicate, acc = []) {
   return acc;
 }
 
+function sumFileBytes(dir) {
+  return walkFiles(dir, () => true).reduce((total, file) => {
+    return total + fs.statSync(path.join(root, file)).size;
+  }, 0);
+}
+
 requireFile('AGENTS.md');
 requireFile('project.config.json');
 requireFile('miniprogram/app.json');
@@ -122,8 +128,14 @@ for (const jsFile of walkFiles('cloudfunctions', (file) => file.endsWith('.js'))
   execFileSync(process.execPath, ['--check', path.join(root, jsFile)]);
 }
 
+const miniprogramSourceBytes = sumFileBytes('miniprogram');
+const miniprogramSourceLimitBytes = 2 * 1024 * 1024;
+if (miniprogramSourceBytes > miniprogramSourceLimitBytes) {
+  fail(`小程序主包源文件超过 2MB: ${Math.ceil(miniprogramSourceBytes / 1024)}KB`);
+}
+
 if (process.exitCode) {
   process.exit(process.exitCode);
 }
 
-console.log('项目结构校验通过');
+console.log(`项目结构校验通过，miniprogram 源文件约 ${Math.ceil(miniprogramSourceBytes / 1024)}KB`);
