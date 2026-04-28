@@ -21,22 +21,32 @@
     "list": [
       {
         "pagePath": "pages/home/home",
+        "iconPath": "assets/tabbar/home-default.png",
+        "selectedIconPath": "assets/tabbar/home-selected.png",
         "text": "首页"
       },
       {
         "pagePath": "pages/ledger/ledger",
+        "iconPath": "assets/tabbar/ledger-default.png",
+        "selectedIconPath": "assets/tabbar/ledger-selected.png",
         "text": "记一笔"
       },
       {
         "pagePath": "pages/charts/charts",
+        "iconPath": "assets/tabbar/charts-default.png",
+        "selectedIconPath": "assets/tabbar/charts-selected.png",
         "text": "图表"
       },
       {
         "pagePath": "pages/details/details",
+        "iconPath": "assets/tabbar/details-default.png",
+        "selectedIconPath": "assets/tabbar/details-selected.png",
         "text": "明细"
       },
       {
         "pagePath": "pages/mine/mine",
+        "iconPath": "assets/tabbar/mine-default.png",
+        "selectedIconPath": "assets/tabbar/mine-selected.png",
         "text": "我的"
       }
     ]
@@ -48,4 +58,3 @@
     "forest-card": "/components/forest-card/forest-card"
   }
 }
-

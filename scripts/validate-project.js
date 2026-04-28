@@ -16,6 +16,34 @@ function requireFile(file) {
   }
 }
 
+function requirePng(file, { width, height, alpha } = {}) {
+  const fullPath = path.join(root, file);
+  requireFile(file);
+
+  const buffer = fs.readFileSync(fullPath);
+  const isPng = buffer.slice(0, 8).equals(Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]));
+  if (!isPng) {
+    fail(`不是 PNG 文件: ${file}`);
+    return;
+  }
+
+  const actualWidth = buffer.readUInt32BE(16);
+  const actualHeight = buffer.readUInt32BE(20);
+  const colorType = buffer[25];
+
+  if (width && actualWidth !== width) {
+    fail(`PNG 宽度不符合预期: ${file}，实际 ${actualWidth}，预期 ${width}`);
+  }
+
+  if (height && actualHeight !== height) {
+    fail(`PNG 高度不符合预期: ${file}，实际 ${actualHeight}，预期 ${height}`);
+  }
+
+  if (alpha && colorType !== 4 && colorType !== 6) {
+    fail(`PNG 缺少透明通道: ${file}`);
+  }
+}
+
 function readJson(file) {
   const fullPath = path.join(root, file);
   requireFile(file);
@@ -48,6 +76,10 @@ requireFile('miniprogram/utils/cloud-ledger-core.js');
 requireFile('miniprogram/assets/images/forest-header.png');
 requireFile('miniprogram/assets/images/forest-guardian.png');
 requireFile('miniprogram/assets/images/ledger-success.png');
+for (const name of ['home', 'ledger', 'charts', 'details', 'mine']) {
+  requirePng(`miniprogram/assets/tabbar/${name}-default.png`, { width: 81, height: 81, alpha: true });
+  requirePng(`miniprogram/assets/tabbar/${name}-selected.png`, { width: 81, height: 81, alpha: true });
+}
 requireFile('cloudfunctions/initUser/index.js');
 requireFile('cloudfunctions/ledgerQuery/index.js');
 requireFile('cloudfunctions/ledgerWrite/index.js');
@@ -70,6 +102,16 @@ for (const page of appConfig.pages) {
   requireFile(`miniprogram/${page}.json`);
   requireFile(`miniprogram/${page}.wxml`);
   requireFile(`miniprogram/${page}.wxss`);
+}
+
+for (const item of appConfig.tabBar.list) {
+  if (!item.iconPath || !item.selectedIconPath) {
+    fail(`tabBar 缺少图标配置: ${item.pagePath}`);
+    continue;
+  }
+
+  requireFile(`miniprogram/${item.iconPath}`);
+  requireFile(`miniprogram/${item.selectedIconPath}`);
 }
 
 for (const jsFile of walkFiles('miniprogram', (file) => file.endsWith('.js'))) {
