@@ -1,4 +1,16 @@
-const { createLedgerRecord, parseYuanToCents } = require('../../utils/ledger');
+const {
+  createLedgerRecord,
+  formatCurrencyCents,
+  getDateOffset,
+  getTodayDate,
+  parseTagText,
+  parseYuanToCents
+} = require('../../utils/ledger');
+
+function findAccountIndex(accounts, account) {
+  const index = accounts.indexOf(account);
+  return index >= 0 ? index : 0;
+}
 
 Page({
   data: {
@@ -13,8 +25,13 @@ Page({
     activeCategory: '',
     accounts: [],
     accountIndex: 0,
-    date: '2026-04-28',
+    date: '',
     note: '',
+    tagText: '',
+    isEditing: false,
+    editingId: '',
+    editingCreatedAt: '',
+    saveButtonText: '记好了',
     lastSaved: null
   },
 
@@ -22,18 +39,47 @@ Page({
     const app = getApp();
     await app.ensureCloudData();
     this.setData({
-      accounts: app.globalData.accounts || []
+      accounts: app.globalData.accounts || [],
+      date: getTodayDate()
     });
     this.updateCategories('expense');
   },
 
-  updateCategories(type) {
+  async onShow() {
+    const app = getApp();
+    await app.ensureCloudData();
+    const editingRecord = app.consumeEditingRecord();
+    if (editingRecord) {
+      this.loadEditingRecord(editingRecord);
+    }
+  },
+
+  updateCategories(type, selectedCategory) {
     const app = getApp();
     const categories = (app.globalData.categories || []).filter((item) => item.type === type);
     this.setData({
       categories,
-      activeCategory: categories[0] ? categories[0].name : ''
+      activeCategory: selectedCategory || (categories[0] ? categories[0].name : '')
     });
+  },
+
+  loadEditingRecord(record) {
+    const app = getApp();
+    const accounts = app.globalData.accounts || [];
+    this.setData({
+      activeType: record.type,
+      amountText: formatCurrencyCents(record.amountCents),
+      accountIndex: findAccountIndex(accounts, record.account),
+      date: record.date,
+      note: record.note || '',
+      tagText: (record.tags || []).join('，'),
+      isEditing: true,
+      editingId: record.id,
+      editingCreatedAt: record.createdAt,
+      saveButtonText: '保存修改',
+      lastSaved: null
+    });
+    this.updateCategories(record.type, record.category);
   },
 
   onTypeTap(event) {
@@ -62,6 +108,12 @@ Page({
     });
   },
 
+  onTagInput(event) {
+    this.setData({
+      tagText: event.detail.value
+    });
+  },
+
   onAccountChange(event) {
     this.setData({
       accountIndex: Number(event.detail.value)
@@ -74,8 +126,29 @@ Page({
     });
   },
 
+  onDatePresetTap(event) {
+    const preset = event.currentTarget.dataset.preset;
+    const today = getTodayDate();
+    this.setData({
+      date: preset === 'yesterday' ? getDateOffset(today, -1) : today
+    });
+  },
+
+  resetForm() {
+    this.setData({
+      amountText: '',
+      note: '',
+      tagText: '',
+      isEditing: false,
+      editingId: '',
+      editingCreatedAt: '',
+      saveButtonText: '记好了'
+    });
+  },
+
   async saveRecord() {
     const amountCents = parseYuanToCents(this.data.amountText);
+    const wasEditing = this.data.isEditing;
 
     if (!amountCents || amountCents <= 0) {
       wx.showToast({
@@ -92,25 +165,28 @@ Page({
       category: this.data.activeCategory,
       account: this.data.accounts[this.data.accountIndex] || '微信',
       date: this.data.date,
-      tags: [],
-      note: this.data.note
+      tags: parseTagText(this.data.tagText),
+      note: this.data.note,
+      id: this.data.editingId,
+      createdAt: this.data.editingCreatedAt
     });
 
     wx.showLoading({
-      title: '记录中'
+      title: this.data.isEditing ? '保存中' : '记录中'
     });
 
-    const savedRecord = await app.saveLedgerRecord(record);
+    const savedRecord = wasEditing
+      ? await app.updateLedgerRecord(record)
+      : await app.saveLedgerRecord(record);
     wx.hideLoading();
 
     this.setData({
-      lastSaved: savedRecord,
-      amountText: '',
-      note: ''
+      lastSaved: savedRecord
     });
+    this.resetForm();
 
     wx.showToast({
-      title: '记好了',
+      title: wasEditing ? '已保存' : '记好了',
       icon: 'success'
     });
   }

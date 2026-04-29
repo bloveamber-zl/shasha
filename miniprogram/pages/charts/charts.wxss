@@ -17,8 +17,16 @@
   display: block;
   margin: 14rpx 0;
   color: #344032;
-  font-size: 44rpx;
+  font-size: 42rpx;
   font-weight: 900;
+}
+
+.chart-hint {
+  display: block;
+  max-width: 410rpx;
+  color: #6F745C;
+  font-size: 22rpx;
+  line-height: 1.45;
 }
 
 .chart-mascot {
@@ -27,17 +35,74 @@
   flex: none;
 }
 
+.empty-card {
+  display: flex;
+  margin-top: 28rpx;
+  padding: 38rpx;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+}
+
+.empty-image {
+  width: 230rpx;
+  height: 230rpx;
+}
+
+.empty-title {
+  margin-top: 18rpx;
+  color: #344032;
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.empty-desc {
+  margin-top: 10rpx;
+  color: #8A7B63;
+  font-size: 24rpx;
+  line-height: 1.45;
+}
+
+.segmented-control {
+  display: flex;
+  margin-bottom: 20rpx;
+  padding: 8rpx;
+  border-radius: 999rpx;
+  background: rgba(107, 139, 89, 0.12);
+}
+
+.segmented-button {
+  display: flex;
+  flex: 1;
+  height: 62rpx;
+  border-radius: 999rpx;
+  align-items: center;
+  justify-content: center;
+  color: #6F745C;
+  font-size: 25rpx;
+  font-weight: 800;
+  line-height: 62rpx;
+}
+
+.segmented-button.active {
+  color: #FFFFFF;
+  background: #5EA56B;
+  box-shadow: 0 10rpx 22rpx rgba(70, 139, 94, 0.18);
+}
+
 .trend-card {
   display: flex;
   min-height: 268rpx;
   padding: 28rpx 20rpx 22rpx;
   align-items: flex-end;
-  justify-content: space-around;
+  gap: 16rpx;
+  overflow-x: auto;
 }
 
 .trend-item {
   display: flex;
-  width: 18%;
+  width: 96rpx;
+  flex: 0 0 96rpx;
   align-items: center;
   flex-direction: column;
 }
@@ -61,16 +126,32 @@
   margin-top: 14rpx;
   color: #665D4C;
   font-size: 22rpx;
+  white-space: nowrap;
 }
 
 .trend-value {
   margin-top: 8rpx;
   color: #9A8F77;
-  font-size: 20rpx;
+  font-size: 19rpx;
+  white-space: nowrap;
+}
+
+.trend-value.income {
+  color: #4F8F62;
 }
 
 .category-card {
+  min-height: 120rpx;
   padding: 8rpx 24rpx 18rpx;
+}
+
+.category-empty {
+  display: flex;
+  min-height: 112rpx;
+  align-items: center;
+  justify-content: center;
+  color: #8A7B63;
+  font-size: 25rpx;
 }
 
 .category-stat {
@@ -115,4 +196,3 @@
   font-size: 22rpx;
   text-align: right;
 }
-

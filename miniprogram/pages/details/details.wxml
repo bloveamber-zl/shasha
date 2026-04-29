@@ -17,6 +17,44 @@
         <text>{{categoryNames[categoryIndex]}}</text>
       </view>
     </picker>
+    <picker mode="selector" range="{{accountNames}}" value="{{accountIndex}}" bindchange="onAccountChange">
+      <view class="category-filter">
+        <text>账户筛选</text>
+        <text>{{accountNames[accountIndex]}}</text>
+      </view>
+    </picker>
+    <picker mode="selector" range="{{tagNames}}" value="{{tagIndex}}" bindchange="onTagChange">
+      <view class="category-filter">
+        <text>标签筛选</text>
+        <text>{{tagNames[tagIndex]}}</text>
+      </view>
+    </picker>
+    <view class="date-filter">
+      <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+        <view class="date-filter-item">
+          <text>开始</text>
+          <text>{{startDate || '不限'}}</text>
+        </view>
+      </picker>
+      <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+        <view class="date-filter-item">
+          <text>结束</text>
+          <text>{{endDate || '不限'}}</text>
+        </view>
+      </picker>
+    </view>
+    <button class="clear-filter" bindtap="clearFilters">清空筛选</button>
+  </view>
+
+  <view class="summary-card paper-card">
+    <view class="summary-item" wx:for="{{summaryCards}}" wx:key="label">
+      <text class="summary-label">{{item.label}}</text>
+      <text class="summary-value">{{item.value}}</text>
+    </view>
+    <button class="top-category" bindtap="applyTopCategory">
+      <text>最大支出分类</text>
+      <text>{{topCategory}} · {{topCategoryAmount}}</text>
+    </button>
   </view>
 
   <view class="empty-card paper-card" wx:if="{{groups.length === 0}}">
@@ -35,13 +73,17 @@
         <view>
           <text class="record-title">{{record.category}}</text>
           <text class="record-note">{{record.note || record.account}}</text>
+          <text class="record-tags" wx:if="{{record.tags.length > 0}}">{{record.tagText}}</text>
         </view>
         <view class="record-side">
           <text class="{{record.amountClass}} record-amount">{{record.displayAmount}}</text>
           <text class="record-account">{{record.account}}</text>
+          <view class="record-actions">
+            <button bindtap="editRecord" data-id="{{record.id}}">编辑</button>
+            <button class="danger" bindtap="deleteRecord" data-id="{{record.id}}">删除</button>
+          </view>
         </view>
       </view>
     </view>
   </view>
 </view>
-

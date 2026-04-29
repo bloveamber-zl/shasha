@@ -34,6 +34,111 @@
   font-size: 28rpx;
   font-weight: 700;
   justify-content: space-between;
+  gap: 20rpx;
+}
+
+.category-filter text:last-child {
+  max-width: 390rpx;
+  color: #8A7B63;
+  font-weight: 600;
+  overflow: hidden;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.date-filter {
+  display: grid;
+  padding: 18rpx 0 8rpx;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18rpx;
+}
+
+.date-filter-item {
+  display: flex;
+  min-height: 76rpx;
+  padding: 0 18rpx;
+  border-radius: 22rpx;
+  align-items: center;
+  justify-content: space-between;
+  color: #344032;
+  font-size: 25rpx;
+  font-weight: 800;
+  background: rgba(107, 139, 89, 0.1);
+}
+
+.date-filter-item text:last-child {
+  color: #8A7B63;
+  font-weight: 600;
+}
+
+.clear-filter {
+  display: flex;
+  height: 62rpx;
+  margin-top: 16rpx;
+  border-radius: 999rpx;
+  align-items: center;
+  justify-content: center;
+  color: #4F6D45;
+  font-size: 25rpx;
+  font-weight: 800;
+  line-height: 62rpx;
+  background: rgba(107, 139, 89, 0.12);
+}
+
+.summary-card {
+  display: grid;
+  margin-top: 24rpx;
+  padding: 24rpx;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18rpx;
+}
+
+.summary-item {
+  min-height: 104rpx;
+  padding: 18rpx;
+  border-radius: 24rpx;
+  background: rgba(255, 251, 239, 0.72);
+}
+
+.summary-label {
+  display: block;
+  color: #8A7B63;
+  font-size: 23rpx;
+  font-weight: 700;
+}
+
+.summary-value {
+  display: block;
+  margin-top: 10rpx;
+  color: #344032;
+  font-size: 32rpx;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.top-category {
+  display: flex;
+  min-height: 92rpx;
+  padding: 0 22rpx;
+  border-radius: 24rpx;
+  align-items: center;
+  justify-content: space-between;
+  grid-column: 1 / -1;
+  color: #344032;
+  font-size: 25rpx;
+  font-weight: 800;
+  line-height: 1.35;
+  background: rgba(94, 165, 107, 0.12);
+}
+
+.top-category text:last-child {
+  max-width: 380rpx;
+  color: #4F8F62;
+  overflow: hidden;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .record-list {
@@ -44,6 +149,7 @@
   display: flex;
   padding: 24rpx 0;
   border-bottom: 2rpx solid rgba(115, 93, 58, 0.08);
+  gap: 18rpx;
   justify-content: space-between;
 }
 
@@ -59,14 +165,25 @@
 }
 
 .record-note,
-.record-account {
+.record-account,
+.record-tags {
   display: block;
   margin-top: 8rpx;
   color: #8A7B63;
   font-size: 23rpx;
 }
 
+.record-tags {
+  max-width: 360rpx;
+  color: #5D8A61;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .record-side {
+  width: 230rpx;
+  flex: none;
   text-align: right;
 }
 
@@ -74,6 +191,33 @@
   display: block;
   font-size: 30rpx;
   font-weight: 800;
+}
+
+.record-actions {
+  display: flex;
+  margin-top: 12rpx;
+  gap: 10rpx;
+  justify-content: flex-end;
+}
+
+.record-actions button {
+  display: flex;
+  min-width: 82rpx;
+  height: 48rpx;
+  padding: 0 16rpx;
+  border-radius: 999rpx;
+  align-items: center;
+  justify-content: center;
+  color: #4F6D45;
+  font-size: 21rpx;
+  font-weight: 800;
+  line-height: 48rpx;
+  background: rgba(107, 139, 89, 0.12);
+}
+
+.record-actions .danger {
+  color: #B75B47;
+  background: rgba(221, 118, 87, 0.14);
 }
 
 .empty-card {

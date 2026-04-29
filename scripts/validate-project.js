@@ -1,6 +1,10 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const { execFileSync } = require('node:child_process');
+const {
+  findForbiddenSecretMarkers,
+  validateFeatureWorkflow
+} = require('./validation-core');
 
 const root = path.resolve(__dirname, '..');
 
@@ -91,9 +95,16 @@ requireFile('cloudfunctions/ledgerQuery/index.js');
 requireFile('cloudfunctions/ledgerWrite/index.js');
 requireFile('cloudfunctions/ledgerWrite/ledger-write-core.js');
 requireFile('docs/cloud-deployment.md');
+requireFile('docs/cloud-schema.md');
+requireFile('docs/release-checklist.md');
 
 const projectConfig = readJson('project.config.json');
 const appConfig = readJson('miniprogram/app.json');
+const featureList = readJson('docs/feature_list.json');
+
+for (const error of validateFeatureWorkflow(featureList)) {
+  fail(error);
+}
 
 if (projectConfig.miniprogramRoot !== 'miniprogram/') {
   fail('project.config.json 的 miniprogramRoot 必须是 miniprogram/');
@@ -126,6 +137,19 @@ for (const jsFile of walkFiles('miniprogram', (file) => file.endsWith('.js'))) {
 
 for (const jsFile of walkFiles('cloudfunctions', (file) => file.endsWith('.js'))) {
   execFileSync(process.execPath, ['--check', path.join(root, jsFile)]);
+}
+
+const secretScanFiles = [
+  ...walkFiles('miniprogram', (file) => file.endsWith('.js') || file.endsWith('.json')),
+  ...walkFiles('cloudfunctions', (file) => file.endsWith('.js') || file.endsWith('.json')),
+  'project.config.json'
+].map((file) => ({
+  file,
+  content: fs.readFileSync(path.join(root, file), 'utf8')
+}));
+
+for (const finding of findForbiddenSecretMarkers(secretScanFiles)) {
+  fail(`疑似敏感配置未移除: ${finding.file} -> ${finding.marker}`);
 }
 
 const miniprogramSourceBytes = sumFileBytes('miniprogram');

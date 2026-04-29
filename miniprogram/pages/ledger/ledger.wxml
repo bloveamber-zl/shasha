@@ -1,4 +1,9 @@
 <view class="page ledger-page">
+  <view class="edit-banner paper-card" wx:if="{{isEditing}}">
+    <text class="edit-title">正在编辑一笔账</text>
+    <text class="edit-desc">修改后会覆盖原记录，刷新后仍从云端读取。</text>
+  </view>
+
   <view class="amount-panel paper-card">
     <view class="type-tabs">
       <button
@@ -47,13 +52,21 @@
         <text class="form-value">{{date}}</text>
       </view>
     </picker>
+    <view class="date-shortcuts">
+      <button bindtap="onDatePresetTap" data-preset="today">今天</button>
+      <button bindtap="onDatePresetTap" data-preset="yesterday">昨天</button>
+    </view>
+    <view class="note-row">
+      <text>标签</text>
+      <input class="tag-input" value="{{tagText}}" placeholder="午餐，通勤，可用逗号分隔" bindinput="onTagInput" />
+    </view>
     <view class="note-row">
       <text>备注</text>
       <textarea value="{{note}}" auto-height maxlength="40" placeholder="写点什么，月底会感谢你" bindinput="onNoteInput" />
     </view>
   </view>
 
-  <button class="primary-button save-button" bindtap="saveRecord">记好了</button>
+  <button class="primary-button save-button" bindtap="saveRecord">{{saveButtonText}}</button>
 
   <view class="success-card paper-card" wx:if="{{lastSaved}}">
     <image src="{{successImage}}" class="success-image" mode="aspectFit" />
@@ -63,4 +76,3 @@
     </view>
   </view>
 </view>
-

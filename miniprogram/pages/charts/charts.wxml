@@ -2,32 +2,65 @@
   <view class="chart-hero paper-card">
     <view>
       <text class="chart-kicker">森林观察板</text>
-      <text class="chart-title">本月支出 {{summary.expense}}</text>
+      <text class="chart-title">支出 {{summary.expense}}</text>
       <text class="chart-desc">结余 {{summary.balance}}，日均支出 {{summary.dailyAverage}}</text>
+      <text class="chart-hint" wx:if="{{stateHint}}">{{stateHint}}</text>
     </view>
     <image class="chart-mascot" src="{{guardianImage}}" mode="aspectFit" />
   </view>
 
+  <view class="empty-card paper-card" wx:if="{{!hasRecords}}">
+    <image class="empty-image" src="{{guardianImage}}" mode="aspectFit" />
+    <text class="empty-title">{{emptyTitle}}</text>
+    <text class="empty-desc">{{emptyDesc}}</text>
+  </view>
+
   <view class="section-title">
     <text>最近趋势</text>
-    <text class="muted">支出</text>
+    <text class="muted">收入 / 支出 / 结余</text>
+  </view>
+  <view class="segmented-control paper-card">
+    <button
+      wx:for="{{trendTabs}}"
+      wx:key="value"
+      class="segmented-button {{item.active ? 'active' : ''}}"
+      bindtap="onTrendModeTap"
+      data-value="{{item.value}}"
+    >
+      {{item.label}}
+    </button>
   </view>
   <view class="trend-card paper-card">
-    <view class="trend-item" wx:for="{{trend}}" wx:key="date">
+    <view class="trend-item" wx:for="{{trend}}" wx:key="key">
       <view class="bar-wrap">
         <view class="trend-bar" style="height: {{item.height}}rpx;"></view>
       </view>
-      <text class="trend-date">{{item.date}}</text>
-      <text class="trend-value">{{item.expense}}</text>
+      <text class="trend-date">{{item.label}}</text>
+      <text class="trend-value">支 {{item.expense}}</text>
+      <text class="trend-value income">收 {{item.income}}</text>
     </view>
   </view>
 
   <view class="section-title">
     <text>分类占比</text>
-    <text class="muted">支出排行</text>
+    <text class="muted">{{breakdown.total}}</text>
+  </view>
+  <view class="segmented-control paper-card">
+    <button
+      wx:for="{{breakdownTabs}}"
+      wx:key="value"
+      class="segmented-button {{item.active ? 'active' : ''}}"
+      bindtap="onBreakdownTypeTap"
+      data-value="{{item.value}}"
+    >
+      {{item.label}}
+    </button>
   </view>
   <view class="category-card paper-card">
-    <view class="category-stat" wx:for="{{categoryStats}}" wx:key="category">
+    <view class="category-empty" wx:if="{{breakdown.items.length === 0}}">
+      <text>当前维度暂无分类数据</text>
+    </view>
+    <view class="category-stat" wx:for="{{breakdown.items}}" wx:key="category">
       <view class="category-head">
         <text class="category-name">{{item.icon}} {{item.category}}</text>
         <text class="category-amount">{{item.amount}}</text>
@@ -39,4 +72,3 @@
     </view>
   </view>
 </view>
-

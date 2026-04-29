@@ -1,3 +1,22 @@
+.edit-banner {
+  margin-bottom: 24rpx;
+  padding: 22rpx 26rpx;
+}
+
+.edit-title {
+  display: block;
+  color: #344032;
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.edit-desc {
+  display: block;
+  margin-top: 8rpx;
+  color: #8A7B63;
+  font-size: 24rpx;
+}
+
 .amount-panel {
   padding: 28rpx;
 }
@@ -108,6 +127,32 @@
 .form-value {
   color: #8A7B63;
   font-weight: 500;
+}
+
+.date-shortcuts {
+  display: flex;
+  gap: 16rpx;
+  padding: 18rpx 0 24rpx;
+  border-bottom: 2rpx solid rgba(115, 93, 58, 0.08);
+}
+
+.date-shortcuts button {
+  height: 58rpx;
+  min-width: 130rpx;
+  border-radius: 999rpx;
+  color: #4F6D45;
+  font-size: 24rpx;
+  font-weight: 800;
+  line-height: 58rpx;
+  background: rgba(107, 139, 89, 0.12);
+}
+
+.tag-input {
+  width: 100%;
+  min-height: 72rpx;
+  margin-top: 16rpx;
+  color: #344032;
+  font-size: 28rpx;
 }
 
 textarea {

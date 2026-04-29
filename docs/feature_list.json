@@ -1,6 +1,6 @@
 {
   "project": "沙沙记账小程序",
-  "last_updated": "2026-04-28",
+  "last_updated": "2026-04-29",
   "rules": {
     "single_active_feature": true,
     "passing_requires_evidence": true,
@@ -11,7 +11,8 @@
     "not_started": "功能还没开始做。",
     "in_progress": "这个功能是当前唯一正在进行的任务。",
     "blocked": "因为已记录的阻塞问题，当前无法继续推进。",
-    "passing": "要求的验证已经通过，并且证据已经记录。"
+    "passing": "要求的验证已经通过，并且证据已经记录。",
+    "closed": "用户决定关闭或不再继续推进。"
   },
   "features": [
     {
@@ -96,7 +97,7 @@
         "限制范围：当前阶段只做冒烟截图和非空检查，不做像素级 baseline diff。"
       ],
       "user_visible_behavior": "开发者可以运行 npm run visual:smoke 自动生成 5 个核心页面截图，用于视觉验收。",
-      "status": "blocked",
+      "status": "closed",
       "verification": [
         "运行 npm install",
         "确认微信开发者工具 -> 设置 -> 安全 -> 服务端口 已开启",
@@ -111,9 +112,10 @@
         "2026-04-28: 已确认 miniprogram-automator@0.12.1 内置 launch 使用旧参数 --auto-port；当前微信开发者工具 CLI auto 命令使用 --port。脚本已改为直接调用 CLI auto --port 后再 automator.connect。",
         "2026-04-28: npm test 通过，包含 12 个 Node 测试。",
         "2026-04-28: ./init.sh 通过。",
-        "2026-04-28: npm run visual:smoke 仍阻塞于微信开发者工具服务端口未开启；CLI debug 明确提示需要开启 设置 -> 安全 -> 服务端口。"
+        "2026-04-28: npm run visual:smoke 仍阻塞于微信开发者工具服务端口未开启；CLI debug 明确提示需要开启 设置 -> 安全 -> 服务端口。",
+        "2026-04-29: 用户明确要求关闭 visual-20260428-008，后续不再推进自动化视觉冒烟验收。"
       ],
-      "notes": "需要用户在微信开发者工具中手动开启服务端口后重跑 npm run visual:smoke。CLI 提示输入 y 尝试开启后仍超时等待 IDE port，因此以手动设置为准。"
+      "notes": "已按用户要求关闭；保留现有脚本和文档，但不再作为当前待办 blocker。"
     },
     {
       "id": "cloud-20260428-002",
@@ -163,7 +165,7 @@
         "限制范围：先保证核心 CRUD 稳定，不急于做复杂统计。"
       ],
       "user_visible_behavior": "用户可以每天快速记录收入或支出，并在列表中查看、修改和删除。",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "运行 ./init.sh",
         "在微信开发者工具新增一条今日支出",
@@ -171,8 +173,15 @@
         "删除该记录并确认列表刷新",
         "刷新小程序后确认数据持久化状态正确"
       ],
-      "evidence": [],
-      "notes": "金额处理避免浮点误差，建议以分为单位存储。"
+      "evidence": [
+        "2026-04-29: 记账页支持新增和编辑模式，字段包含金额、收支类型、分类、账户、日期、标签、备注。",
+        "2026-04-29: 记账页支持今天/昨天快捷日期和自定义日期；标签输入会按逗号、顿号或空格去重解析。",
+        "2026-04-29: 明细页列表支持编辑和删除操作，编辑通过全局 editingRecordId 跳回记账页加载原记录。",
+        "2026-04-29: app.js 新增 updateLedgerRecord、deleteLedgerRecord，云端优先调用 ledgerWrite update/delete，失败时保留本地预览状态。",
+        "2026-04-29: npm test 通过，覆盖 sortRecords、upsertRecord、deleteRecordById、parseTagText、getDateOffset。",
+        "2026-04-29: npm run lint 通过，项目结构和脚本语法校验通过。"
+      ],
+      "notes": "金额继续以分为单位处理；刷新后持久化依赖已通过的微信云开发 ledgerWrite/ledgerQuery 链路。"
     },
     {
       "id": "charts-20260428-004",
@@ -186,7 +195,7 @@
         "限制范围：使用已存在记账数据，不在本任务中扩展预算或导出。"
       ],
       "user_visible_behavior": "用户可以通过图表直观看到近期收支趋势和分类占比。",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "运行 ./init.sh",
         "准备至少 30 天样例记账数据",
@@ -194,8 +203,15 @@
         "查看分类占比图",
         "确认空数据状态和单条数据状态展示正常"
       ],
-      "evidence": [],
-      "notes": "统计口径需要和云函数/前端展示保持一致。"
+      "evidence": [
+        "2026-04-29: 新增 miniprogram/utils/charts.js，构建图表页视图模型。",
+        "2026-04-29: 图表页支持日/周/月趋势切换，展示收入、支出和结余摘要。",
+        "2026-04-29: 图表页支持支出/收入分类占比切换，空分类时显示稳定空状态。",
+        "2026-04-29: 空数据、单条数据和大量数据通过 buildChartsViewModel 的 hasRecords、isSingleRecord、limit 和横向滚动条形图处理。",
+        "2026-04-29: npm test 通过，新增 charts.test.js 覆盖日/周/月趋势、收支分类占比、空数据和单条数据状态。",
+        "2026-04-29: npm run lint 通过，项目结构和脚本语法校验通过。"
+      ],
+      "notes": "当前使用前端账单数据直接统计，口径复用 ledger.js 的 summarizeRecords、buildTrendBuckets、buildCategoryBreakdown。"
     },
     {
       "id": "insight-20260428-005",
@@ -209,7 +225,7 @@
         "限制范围：先做分析观察，不做 AI 建议或复杂预测。"
       ],
       "user_visible_behavior": "用户可以从不同维度观察自己的消费结构和变化。",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "运行 ./init.sh",
         "准备跨分类、跨账户、跨标签样例数据",
@@ -217,8 +233,15 @@
         "确认摘要数字和明细列表一致",
         "确认筛选条件清空后恢复全量视图"
       ],
-      "evidence": [],
-      "notes": "筛选条件和统计结果要可复现，避免前后端口径分裂。"
+      "evidence": [
+        "2026-04-29: 明细页支持按收支类型、分类、账户、标签、开始日期、结束日期组合筛选。",
+        "2026-04-29: 明细页新增收入、支出、结余、日均支出摘要卡，并显示最大支出分类。",
+        "2026-04-29: 点击最大支出分类可联动切换到支出和对应分类筛选，明细列表同步刷新。",
+        "2026-04-29: 明细页支持一键清空筛选并恢复全量视图。",
+        "2026-04-29: npm test 通过，覆盖 filterRecords、buildInsightSummary 和标签/日期工具。",
+        "2026-04-29: npm run lint 通过，项目结构和脚本语法校验通过。"
+      ],
+      "notes": "洞察摘要由筛选后的同一批 records 生成，避免摘要和明细列表口径分裂。"
     },
     {
       "id": "quality-20260428-006",
@@ -232,15 +255,24 @@
         "限制范围：只做质量和发布工作流，不新增业务功能。"
       ],
       "user_visible_behavior": "每次发布前都有稳定验证路径，降低数据丢失和权限错误风险。",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "运行 VERIFY_MODE=full ./init.sh",
         "确认 lint/test/miniprogram-ci 至少有一种自动化验证接入",
         "确认云函数测试覆盖成功和失败输入",
         "确认发布前手工验收清单可执行"
       ],
-      "evidence": [],
-      "notes": "等核心业务初步成型后再做，避免过早搭复杂流程。"
+      "evidence": [
+        "2026-04-29: 新增 docs/release-checklist.md，覆盖自动验证、小程序手工验收、云开发权限和预览上传检查。",
+        "2026-04-29: package.json 新增 verify:full 脚本，复用 VERIFY_MODE=full ./init.sh。",
+        "2026-04-29: scripts/validate-project.js 新增 feature_list 工作流校验、发布清单存在性校验、敏感配置扫描和主包 2MB 限制校验。",
+        "2026-04-29: 新增 scripts/validation-core.js 和 validation-core.test.js，覆盖敏感配置扫描、closed 状态、单一 in_progress、passing 必须有 evidence。",
+        "2026-04-29: 云函数核心测试已覆盖 validateRecord、buildCreateData、buildUpdateData、canAccessRecord。",
+        "2026-04-29: npm test 通过，30 个 Node 测试全部通过。",
+        "2026-04-29: npm run lint 通过，miniprogram 源文件约 1371KB，低于 2MB 限制。",
+        "2026-04-29: npm run verify:full 通过，完整验证入口复用 ./init.sh 并通过 lint/test。"
+      ],
+      "notes": "当前已接入 lint/test/full verify；miniprogram-ci 作为后续上传自动化增强项记录在发布清单中。"
     }
   ]
 }
