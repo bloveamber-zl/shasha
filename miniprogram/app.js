@@ -1,6 +1,12 @@
 const { sampleRecords, categories, accounts, tags, budgets } = require('./utils/mock-data');
 const { deleteRecordById, sortRecords, upsertRecord } = require('./utils/ledger');
 const { addAccount, addCategory, addTag } = require('./utils/manage');
+const {
+  buildRecurringRecord,
+  buildRecurringViewModel,
+  createRecurringRule,
+  markOccurrenceConfirmed
+} = require('./utils/recurring');
 const { resolveCloudStatus } = require('./utils/cloud-ledger-core');
 const {
   initCloudUser,
@@ -20,11 +26,14 @@ App({
     categories,
     accounts,
     tags,
-    budgets
+    budgets,
+    recurringRules: [],
+    recurringConfirmedKeys: []
   },
 
   onLaunch() {
     this.loadManagedConfig();
+    this.loadRecurringConfig();
 
     if (wx.cloud) {
       wx.cloud.init({
@@ -85,6 +94,41 @@ App({
     return this.globalData.tags;
   },
 
+  addRecurringRule(input) {
+    const rule = createRecurringRule(input);
+    this.globalData.recurringRules = (this.globalData.recurringRules || []).concat(rule);
+    this.persistRecurringConfig();
+    return rule;
+  },
+
+  getRecurringViewModel(todayDate) {
+    return buildRecurringViewModel(
+      this.globalData.recurringRules || [],
+      this.globalData.recurringConfirmedKeys || [],
+      todayDate
+    );
+  },
+
+  async confirmRecurringOccurrence(occurrenceKey) {
+    const confirmedKeys = this.globalData.recurringConfirmedKeys || [];
+    if (confirmedKeys.includes(occurrenceKey)) {
+      return { ok: true, skipped: true };
+    }
+
+    const viewModel = this.getRecurringViewModel();
+    const occurrence = viewModel.dueItems.find((item) => item.key === occurrenceKey);
+    if (!occurrence) {
+      return { ok: false, error: 'NO_DUE_OCCURRENCE' };
+    }
+
+    const rule = (this.globalData.recurringRules || []).find((item) => item.id === occurrence.ruleId);
+    const record = buildRecurringRecord(rule, occurrence);
+    this.globalData.recurringConfirmedKeys = markOccurrenceConfirmed(confirmedKeys, occurrenceKey);
+    this.persistRecurringConfig();
+    const savedRecord = await this.saveLedgerRecord(record);
+    return { ok: true, record: savedRecord, occurrence };
+  },
+
   loadManagedConfig() {
     try {
       const config = wx.getStorageSync('shasha_managed_config') || {};
@@ -102,6 +146,32 @@ App({
         categories: this.globalData.categories || [],
         accounts: this.globalData.accounts || [],
         tags: this.globalData.tags || []
+      });
+    } catch (error) {
+      this.setCloudStatus(error);
+    }
+  },
+
+  loadRecurringConfig() {
+    try {
+      const config = wx.getStorageSync('shasha_recurring_config') || {};
+      this.globalData.recurringRules = Array.isArray(config.rules)
+        ? config.rules.map((rule) => createRecurringRule(rule))
+        : [];
+      this.globalData.recurringConfirmedKeys = Array.isArray(config.confirmedKeys)
+        ? config.confirmedKeys
+        : [];
+    } catch (error) {
+      this.globalData.recurringRules = [];
+      this.globalData.recurringConfirmedKeys = [];
+    }
+  },
+
+  persistRecurringConfig() {
+    try {
+      wx.setStorageSync('shasha_recurring_config', {
+        rules: this.globalData.recurringRules || [],
+        confirmedKeys: this.globalData.recurringConfirmedKeys || []
       });
     } catch (error) {
       this.setCloudStatus(error);

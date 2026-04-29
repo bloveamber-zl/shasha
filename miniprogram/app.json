@@ -5,6 +5,7 @@
     "pages/budget/budget",
     "pages/calendar/calendar",
     "pages/manage/manage",
+    "pages/recurring/recurring",
     "pages/charts/charts",
     "pages/details/details",
     "pages/mine/mine"

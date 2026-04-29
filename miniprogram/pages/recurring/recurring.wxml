@@ -1,0 +1,121 @@
+<view class="page recurring-page">
+  <view class="recurring-hero paper-card">
+    <view class="hero-copy">
+      <text class="hero-kicker">周期记账</text>
+      <text class="hero-title">{{dueCount}} 个待确认</text>
+      <text class="hero-desc">{{enabledCount}} 条规则运行中</text>
+    </view>
+    <image class="hero-image" src="{{guardianImage}}" mode="aspectFit" />
+  </view>
+
+  <view class="section-title">
+    <text>待确认提醒</text>
+    <text class="muted">{{dueCount}} 项</text>
+  </view>
+
+  <view class="due-list paper-card" wx:if="{{hasDue}}">
+    <view class="due-item" wx:for="{{dueItems}}" wx:key="key">
+      <view class="due-main">
+        <text class="due-title">{{item.name}}</text>
+        <text class="due-desc">{{item.frequencyLabel}} · {{item.dueDate}} · {{item.category}}</text>
+        <text class="due-status">{{item.statusLabel}}</text>
+      </view>
+      <view class="due-side">
+        <text class="due-amount {{item.type === 'income' ? 'amount-income' : 'amount-expense'}}">{{item.displayAmount}}</text>
+        <button class="confirm-button" bindtap="confirmDue" data-key="{{item.key}}">确认</button>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-card paper-card" wx:else>
+    <image class="empty-image" src="{{guardianImage}}" mode="aspectFit" />
+    <text class="empty-title">没有待确认账单</text>
+    <text class="empty-desc">固定账单会在到期日出现在这里。</text>
+  </view>
+
+  <view class="section-title">
+    <text>新增规则</text>
+    <text class="muted">{{frequencyLabels[frequencyIndex]}}</text>
+  </view>
+
+  <view class="form-card paper-card">
+    <view class="type-tabs">
+      <button
+        wx:for="{{typeTabs}}"
+        wx:key="value"
+        class="type-tab {{activeType === item.value ? 'active' : ''}}"
+        bindtap="onTypeTap"
+        data-type="{{item.value}}"
+      >
+        {{item.label}}
+      </button>
+    </view>
+
+    <view class="form-row">
+      <text>名称</text>
+      <input value="{{nameText}}" placeholder="房租、工资、会员" bindinput="onNameInput" />
+    </view>
+    <view class="form-row">
+      <text>金额</text>
+      <input type="digit" value="{{amountText}}" placeholder="0.00" bindinput="onAmountInput" />
+    </view>
+    <picker mode="selector" range="{{categories}}" range-key="name" value="{{categoryIndex}}" bindchange="onCategoryChange">
+      <view class="form-row">
+        <text>分类</text>
+        <text class="form-value">{{categories[categoryIndex].name}}</text>
+      </view>
+    </picker>
+    <picker mode="selector" range="{{accounts}}" value="{{accountIndex}}" bindchange="onAccountChange">
+      <view class="form-row">
+        <text>账户</text>
+        <text class="form-value">{{accounts[accountIndex]}}</text>
+      </view>
+    </picker>
+    <picker mode="selector" range="{{frequencyLabels}}" value="{{frequencyIndex}}" bindchange="onFrequencyChange">
+      <view class="form-row">
+        <text>周期</text>
+        <text class="form-value">{{frequencyLabels[frequencyIndex]}}</text>
+      </view>
+    </picker>
+    <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+      <view class="form-row">
+        <text>开始日期</text>
+        <text class="form-value">{{startDate}}</text>
+      </view>
+    </picker>
+    <view class="form-row" wx:if="{{frequencyOptions[frequencyIndex] === 'monthly'}}">
+      <text>每月日期</text>
+      <input type="number" value="{{dayOfMonthText}}" placeholder="1-31" bindinput="onDayOfMonthInput" />
+    </view>
+    <view class="form-row" wx:if="{{frequencyOptions[frequencyIndex] === 'custom'}}">
+      <text>间隔天数</text>
+      <input type="number" value="{{intervalDaysText}}" placeholder="30" bindinput="onIntervalDaysInput" />
+    </view>
+    <view class="note-row">
+      <text>标签</text>
+      <input value="{{tagText}}" placeholder="固定，房租" bindinput="onTagInput" />
+    </view>
+    <view class="note-row">
+      <text>备注</text>
+      <textarea value="{{note}}" auto-height maxlength="40" placeholder="可选" bindinput="onNoteInput" />
+    </view>
+
+    <button class="primary-button add-button" bindtap="addRule">添加周期规则</button>
+  </view>
+
+  <view class="section-title">
+    <text>规则列表</text>
+    <text class="muted">{{rules.length}} 条</text>
+  </view>
+
+  <view class="rule-list paper-card" wx:if="{{hasRules}}">
+    <view class="rule-item" wx:for="{{rules}}" wx:key="id">
+      <text class="rule-icon">{{item.type === 'income' ? '🌰' : '🍃'}}</text>
+      <view class="rule-copy">
+        <text class="rule-title">{{item.name}}</text>
+        <text class="rule-desc">{{item.frequencyText}} · {{item.category}} · {{item.account}}</text>
+      </view>
+      <text class="rule-amount {{item.type === 'income' ? 'amount-income' : 'amount-expense'}}">{{item.displayAmount}}</text>
+    </view>
+  </view>
+</view>

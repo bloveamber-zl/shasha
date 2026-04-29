@@ -378,15 +378,25 @@
         "限制范围：第一版先做规则和待确认列表，不直接自动扣账，避免误记。"
       ],
       "user_visible_behavior": "用户可以为固定支出或收入设置周期规则，到期后快速确认入账。",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "运行 ./init.sh",
         "创建一条月度房租规则",
         "模拟到期后确认生成账单",
         "确认明细页出现对应流水且不会重复生成"
       ],
-      "evidence": [],
-      "notes": "需要设计幂等键，避免同一周期重复生成。"
+      "evidence": [
+        "2026-04-29: 已新增 miniprogram/utils/recurring.js，支持月度、每周、每 N 天周期规则，按到期日生成待确认项。",
+        "2026-04-29: 到期项使用 ruleId + periodKey 作为幂等键；确认键通过 wx storage 持久化，已确认周期不会再次进入待确认列表。",
+        "2026-04-29: 新增 pages/recurring/recurring，支持创建周期规则、查看待确认提醒、确认后写入正式流水。",
+        "2026-04-29: 我的页新增“周期记账”入口；app.js 新增周期规则本地持久化和 confirmRecurringOccurrence 确认入账流程。",
+        "2026-04-29: TDD 红灯：新增 tests/recurring.test.js 后曾失败于缺少 miniprogram/utils/recurring。",
+        "2026-04-29: node --test tests/recurring.test.js 通过，覆盖月度未确认到期项、月底日期夹取、每周/自定义周期和确认键去重。",
+        "2026-04-29: npm test 通过，42 个 Node 测试全部通过。",
+        "2026-04-29: npm run lint 通过，miniprogram 源文件约 1428KB，低于 2MB 限制。",
+        "2026-04-29: ./init.sh 通过，包含 JSON/结构校验、lint 和 42 个 Node 测试。"
+      ],
+      "notes": "第一版不自动扣账；规则和确认键本地持久化，确认后复用现有账单云同步链路写入正式流水。"
     },
     {
       "id": "export-20260429-013",
