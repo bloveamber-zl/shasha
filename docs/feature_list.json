@@ -179,7 +179,9 @@
         "2026-04-29: 明细页列表支持编辑和删除操作，编辑通过全局 editingRecordId 跳回记账页加载原记录。",
         "2026-04-29: app.js 新增 updateLedgerRecord、deleteLedgerRecord，云端优先调用 ledgerWrite update/delete，失败时保留本地预览状态。",
         "2026-04-29: npm test 通过，覆盖 sortRecords、upsertRecord、deleteRecordById、parseTagText、getDateOffset。",
-        "2026-04-29: npm run lint 通过，项目结构和脚本语法校验通过。"
+        "2026-04-29: npm run lint 通过，项目结构和脚本语法校验通过。",
+        "2026-04-29: 收窄记一笔页标签快捷项尺寸，明确 button 的 inline-flex、width、max-width 和省略规则，避免标签按钮过宽。",
+        "2026-04-29: npm test 通过，46 个 Node 测试全部通过；npm run lint 通过；./init.sh 通过。"
       ],
       "notes": "金额继续以分为单位处理；刷新后持久化依赖已通过的微信云开发 ledgerWrite/ledgerQuery 链路。"
     },

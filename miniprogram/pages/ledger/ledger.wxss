@@ -159,17 +159,26 @@
   display: flex;
   margin-top: 14rpx;
   flex-wrap: wrap;
-  gap: 12rpx;
+  gap: 10rpx;
 }
 
 .tag-presets button {
-  height: 50rpx;
-  padding: 0 18rpx;
+  display: inline-flex;
+  width: auto;
+  max-width: 168rpx;
+  min-width: 0;
+  height: 44rpx;
+  padding: 0 14rpx;
   border-radius: 999rpx;
+  align-items: center;
+  justify-content: center;
   color: #4F6D45;
-  font-size: 22rpx;
+  font-size: 21rpx;
   font-weight: 800;
-  line-height: 50rpx;
+  line-height: 44rpx;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   background: rgba(107, 139, 89, 0.12);
 }
 
