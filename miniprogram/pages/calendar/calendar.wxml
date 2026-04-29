@@ -1,0 +1,73 @@
+<view class="page calendar-page">
+  <view class="calendar-hero paper-card">
+    <view>
+      <text class="calendar-kicker">账单日历</text>
+      <text class="calendar-title">{{monthLabel}}</text>
+      <text class="calendar-desc">支出 {{monthSummary.expense}} · 收入 {{monthSummary.income}} · 结余 {{monthSummary.balance}}</text>
+    </view>
+  </view>
+
+  <view class="month-switch paper-card">
+    <button bindtap="onPrevMonth">上月</button>
+    <button bindtap="onCurrentMonth">本月</button>
+    <button bindtap="onNextMonth">下月</button>
+  </view>
+
+  <view class="calendar-card paper-card">
+    <view class="weekday-row">
+      <text wx:for="{{weekdayLabels}}" wx:key="*this">{{item}}</text>
+    </view>
+    <view class="week-row" wx:for="{{weeks}}" wx:key="id">
+      <button
+        wx:for="{{item.days}}"
+        wx:for-item="day"
+        wx:key="date"
+        class="day-cell {{day.inMonth ? '' : 'muted-day'}} {{day.isSelected ? 'selected' : ''}} {{day.hasRecords ? 'has-records' : ''}}"
+        bindtap="onDayTap"
+        data-date="{{day.date}}"
+      >
+        <text class="day-number">{{day.day}}</text>
+        <text class="day-expense" wx:if="{{day.expenseCents > 0}}">-{{day.expense}}</text>
+        <text class="day-income" wx:if="{{day.incomeCents > 0}}">+{{day.income}}</text>
+      </button>
+    </view>
+  </view>
+
+  <view class="section-title">
+    <text>{{selectedDay.date}}</text>
+    <text class="muted">{{selectedDay.records.length}} 笔</text>
+  </view>
+
+  <view class="day-summary paper-card">
+    <view>
+      <text>收入</text>
+      <text class="amount-income">{{selectedDay.summary.income}}</text>
+    </view>
+    <view>
+      <text>支出</text>
+      <text class="amount-expense">{{selectedDay.summary.expense}}</text>
+    </view>
+    <view>
+      <text>结余</text>
+      <text>{{selectedDay.summary.balance}}</text>
+    </view>
+  </view>
+
+  <view class="empty-card paper-card" wx:if="{{selectedDay.records.length === 0}}">
+    <text class="empty-title">这天还没有账单</text>
+    <text class="empty-desc">点选其他日期，或去记一笔。</text>
+  </view>
+
+  <view class="record-list paper-card" wx:if="{{selectedDay.records.length > 0}}">
+    <view class="record-item" wx:for="{{selectedDay.records}}" wx:key="id">
+      <view class="record-main">
+        <text class="record-title">{{item.category}}</text>
+        <text class="record-note">{{item.note || item.account}}</text>
+      </view>
+      <view class="record-side">
+        <text class="{{item.amountClass}} record-amount">{{item.displayAmount}}</text>
+        <text class="record-account">{{item.account}}</text>
+      </view>
+    </view>
+  </view>
+</view>

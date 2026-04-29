@@ -1,0 +1,214 @@
+.calendar-hero {
+  padding: 34rpx;
+}
+
+.calendar-kicker,
+.calendar-desc {
+  display: block;
+  color: #8A7B63;
+  font-size: 24rpx;
+  line-height: 1.45;
+}
+
+.calendar-title {
+  display: block;
+  margin: 12rpx 0;
+  color: #344032;
+  font-size: 42rpx;
+  font-weight: 900;
+}
+
+.month-switch {
+  display: grid;
+  margin-top: 24rpx;
+  padding: 8rpx;
+  border-radius: 999rpx;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  background: rgba(107, 139, 89, 0.12);
+}
+
+.month-switch button {
+  display: flex;
+  height: 62rpx;
+  border-radius: 999rpx;
+  align-items: center;
+  justify-content: center;
+  color: #4F6D45;
+  font-size: 25rpx;
+  font-weight: 800;
+  line-height: 62rpx;
+}
+
+.calendar-card {
+  margin-top: 24rpx;
+  padding: 18rpx 14rpx 20rpx;
+}
+
+.weekday-row,
+.week-row {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 8rpx;
+}
+
+.weekday-row {
+  margin-bottom: 10rpx;
+}
+
+.weekday-row text {
+  color: #8A7B63;
+  font-size: 22rpx;
+  font-weight: 800;
+  text-align: center;
+}
+
+.week-row {
+  margin-top: 8rpx;
+}
+
+.day-cell {
+  display: flex;
+  min-height: 98rpx;
+  padding: 8rpx 4rpx;
+  border-radius: 20rpx;
+  align-items: center;
+  justify-content: flex-start;
+  flex-direction: column;
+  background: rgba(255, 251, 239, 0.72);
+}
+
+.day-cell.has-records {
+  background: rgba(94, 165, 107, 0.1);
+}
+
+.day-cell.selected {
+  background: #5EA56B;
+}
+
+.day-cell.selected text {
+  color: #FFFFFF;
+}
+
+.day-cell.muted-day {
+  opacity: 0.45;
+}
+
+.day-number {
+  color: #344032;
+  font-size: 25rpx;
+  font-weight: 900;
+}
+
+.day-expense,
+.day-income {
+  display: block;
+  max-width: 84rpx;
+  margin-top: 6rpx;
+  overflow: hidden;
+  font-size: 18rpx;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.day-expense {
+  color: #DD7657;
+}
+
+.day-income {
+  color: #329081;
+}
+
+.day-summary {
+  display: grid;
+  padding: 24rpx;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18rpx;
+}
+
+.day-summary view {
+  min-height: 92rpx;
+  padding: 14rpx;
+  border-radius: 22rpx;
+  background: rgba(255, 251, 239, 0.72);
+}
+
+.day-summary text {
+  display: block;
+  color: #8A7B63;
+  font-size: 23rpx;
+  font-weight: 700;
+}
+
+.day-summary text:last-child {
+  margin-top: 8rpx;
+  color: #344032;
+  font-size: 28rpx;
+  font-weight: 900;
+  overflow-wrap: anywhere;
+}
+
+.empty-card {
+  margin-top: 24rpx;
+  padding: 34rpx;
+  text-align: center;
+}
+
+.empty-title {
+  display: block;
+  color: #344032;
+  font-size: 30rpx;
+  font-weight: 900;
+}
+
+.empty-desc {
+  display: block;
+  margin-top: 10rpx;
+  color: #8A7B63;
+  font-size: 24rpx;
+}
+
+.record-list {
+  padding: 8rpx 24rpx;
+}
+
+.record-item {
+  display: flex;
+  padding: 24rpx 0;
+  border-bottom: 2rpx solid rgba(115, 93, 58, 0.08);
+  gap: 18rpx;
+  justify-content: space-between;
+}
+
+.record-item:last-child {
+  border-bottom: 0;
+}
+
+.record-main,
+.record-side {
+  display: flex;
+  flex-direction: column;
+}
+
+.record-side {
+  flex: none;
+  align-items: flex-end;
+}
+
+.record-title {
+  color: #344032;
+  font-size: 29rpx;
+  font-weight: 900;
+}
+
+.record-note,
+.record-account {
+  margin-top: 8rpx;
+  color: #8A7B63;
+  font-size: 23rpx;
+}
+
+.record-amount {
+  font-size: 30rpx;
+  font-weight: 900;
+}

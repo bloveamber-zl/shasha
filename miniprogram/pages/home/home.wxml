@@ -35,6 +35,11 @@
       <text class="quick-title">看预算</text>
       <text class="quick-desc">剩余可花</text>
     </button>
+    <button class="quick-action" bindtap="goPage" data-url="/pages/calendar/calendar">
+      <text class="quick-icon">📅</text>
+      <text class="quick-title">看日历</text>
+      <text class="quick-desc">按天回看</text>
+    </button>
   </view>
 
   <view class="section-title">
