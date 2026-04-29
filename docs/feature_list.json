@@ -410,15 +410,26 @@
         "限制范围：第一版优先实现 CSV 导出，不在本任务中处理复杂云端分享权限。"
       ],
       "user_visible_behavior": "用户可以把账单导出为表格文件，用于备份或外部分析。",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "运行 ./init.sh",
         "准备多条不同类型账单",
         "按日期区间导出 CSV",
         "确认文件字段完整、金额单位正确、中文内容可读"
       ],
-      "evidence": [],
-      "notes": "导出过程不得包含 openid 等用户内部归属字段。"
+      "evidence": [
+        "2026-04-29: 已新增 miniprogram/utils/export.js，支持按开始/结束日期筛选账单并生成 CSV。",
+        "2026-04-29: CSV 字段包含日期、收支类型、金额(元)、分类、账户、标签、备注，不包含 _openid、ownerOpenid、createdAt 等内部字段。",
+        "2026-04-29: CSV 默认带 UTF-8 BOM，中文内容在常见表格软件中可读；逗号、换行、引号会按 CSV 规则转义。",
+        "2026-04-29: 新增 pages/export/export，支持本月、近 30 天、全部日期快捷筛选，展示摘要和前 5 条导出预览，并写入 CSV 文件到小程序用户目录。",
+        "2026-04-29: 我的页新增“数据导出”入口。",
+        "2026-04-29: TDD 红灯：新增 tests/export.test.js 后曾失败于缺少 miniprogram/utils/export。",
+        "2026-04-29: node --test tests/export.test.js 通过，覆盖日期区间、业务字段、CSV 转义、中文 BOM、导出摘要和文件名。",
+        "2026-04-29: npm test 通过，45 个 Node 测试全部通过。",
+        "2026-04-29: npm run lint 通过，miniprogram 源文件约 1440KB，低于 2MB 限制。",
+        "2026-04-29: ./init.sh 通过，包含 JSON/结构校验、lint 和 45 个 Node 测试。"
+      ],
+      "notes": "第一版导出 CSV 到小程序用户目录，并支持复制文件路径；不导出 openid 等用户内部归属字段。"
     }
   ]
 }

@@ -6,6 +6,7 @@
     "pages/calendar/calendar",
     "pages/manage/manage",
     "pages/recurring/recurring",
+    "pages/export/export",
     "pages/charts/charts",
     "pages/details/details",
     "pages/mine/mine"

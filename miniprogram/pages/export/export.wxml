@@ -1,0 +1,77 @@
+<view class="page export-page">
+  <view class="export-hero paper-card">
+    <view class="hero-copy">
+      <text class="hero-kicker">数据导出</text>
+      <text class="hero-title">{{recordCount}} 笔账单</text>
+      <text class="hero-desc">{{fileName}}</text>
+    </view>
+    <image class="hero-image" src="{{guardianImage}}" mode="aspectFit" />
+  </view>
+
+  <view class="filter-card paper-card">
+    <view class="date-filter">
+      <picker mode="date" value="{{startDate}}" bindchange="onStartDateChange">
+        <view class="date-filter-item">
+          <text>开始</text>
+          <text>{{startDate || '不限'}}</text>
+        </view>
+      </picker>
+      <picker mode="date" value="{{endDate}}" bindchange="onEndDateChange">
+        <view class="date-filter-item">
+          <text>结束</text>
+          <text>{{endDate || '不限'}}</text>
+        </view>
+      </picker>
+    </view>
+    <view class="quick-actions">
+      <button bindtap="useThisMonth">本月</button>
+      <button bindtap="useRecent30Days">近 30 天</button>
+      <button bindtap="useAllDates">全部</button>
+    </view>
+  </view>
+
+  <view class="summary-card paper-card">
+    <view class="summary-item">
+      <text class="summary-label">收入</text>
+      <text class="summary-value amount-income">{{income}}</text>
+    </view>
+    <view class="summary-item">
+      <text class="summary-label">支出</text>
+      <text class="summary-value amount-expense">{{expense}}</text>
+    </view>
+    <view class="summary-item full">
+      <text class="summary-label">结余</text>
+      <text class="summary-value">{{balance}}</text>
+    </view>
+  </view>
+
+  <button class="primary-button export-button" bindtap="exportCsv">生成 CSV</button>
+
+  <view class="path-card paper-card" wx:if="{{lastFilePath}}">
+    <text class="path-title">最近导出文件</text>
+    <text class="path-text">{{lastFilePath}}</text>
+    <button class="copy-button" bindtap="copyFilePath">复制路径</button>
+  </view>
+
+  <view class="section-title">
+    <text>导出预览</text>
+    <text class="muted">前 {{previewRows.length}} 笔</text>
+  </view>
+
+  <view class="empty-card paper-card" wx:if="{{!hasRecords}}">
+    <image class="empty-image" src="{{guardianImage}}" mode="aspectFit" />
+    <text class="empty-title">没有可导出的账单</text>
+    <text class="empty-desc">换个日期区间，或先去记一笔。</text>
+  </view>
+
+  <view class="preview-list paper-card" wx:else>
+    <view class="preview-item" wx:for="{{previewRows}}" wx:key="date">
+      <view class="preview-main">
+        <text class="preview-title">{{item.date}} · {{item.category}}</text>
+        <text class="preview-desc">{{item.typeLabel}} · {{item.account}} · {{item.tags || '无标签'}}</text>
+        <text class="preview-note">{{item.note || '无备注'}}</text>
+      </view>
+      <text class="preview-amount {{item.typeLabel === '收入' ? 'amount-income' : 'amount-expense'}}">{{item.amountYuan}}</text>
+    </view>
+  </view>
+</view>
