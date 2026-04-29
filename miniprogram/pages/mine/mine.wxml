@@ -14,7 +14,7 @@
   </view>
 
   <view class="menu-list paper-card">
-    <view class="menu-item" wx:for="{{menuItems}}" wx:key="title">
+    <view class="menu-item" wx:for="{{menuItems}}" wx:key="title" bindtap="openMenu" data-url="{{item.url}}">
       <text class="menu-icon">{{item.icon}}</text>
       <view class="menu-copy">
         <text class="menu-title">{{item.title}}</text>

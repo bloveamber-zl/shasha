@@ -1,0 +1,60 @@
+<view class="page budget-page">
+  <view class="budget-hero paper-card {{monthBudget.tone}}">
+    <view class="budget-hero-copy">
+      <text class="budget-kicker">{{month}} 预算</text>
+      <text class="budget-title">{{monthBudget.headlineLabel}} {{monthBudget.remainingCents < 0 ? monthBudget.overspent : monthBudget.remaining}}</text>
+      <text class="budget-desc">已花 {{monthBudget.spent}} / 预算 {{monthBudget.amount}}</text>
+      <text class="budget-desc">日均可花 {{monthBudget.dailyAvailable}} · {{monthBudget.statusText}}</text>
+    </view>
+    <image class="budget-guardian" src="{{guardianImage}}" mode="aspectFit" />
+  </view>
+
+  <view class="month-switch paper-card">
+    <button bindtap="onPrevMonth">上月</button>
+    <button bindtap="onCurrentMonth">本月</button>
+    <button bindtap="onNextMonth">下月</button>
+  </view>
+
+  <view class="budget-progress paper-card">
+    <view class="progress-head">
+      <text>月度预算使用率</text>
+      <text>{{monthBudget.percent}}%</text>
+    </view>
+    <view class="progress-track">
+      <view class="progress-fill {{monthBudget.tone}}" style="width: {{monthBudget.percent}}%;"></view>
+    </view>
+  </view>
+
+  <view class="empty-card paper-card" wx:if="{{!hasBudget}}">
+    <image class="empty-image" src="{{guardianImage}}" mode="aspectFit" />
+    <text class="empty-title">还没有预算</text>
+    <text class="empty-desc">先在默认预算上体验，后续会加入预算编辑和云端同步。</text>
+  </view>
+
+  <view class="section-title">
+    <text>分类预算</text>
+    <text class="muted">{{categoryBudgets.length}} 项</text>
+  </view>
+
+  <view class="category-budget-list paper-card">
+    <view class="category-budget-item" wx:for="{{categoryBudgets}}" wx:key="id">
+      <view class="category-budget-head">
+        <view class="category-main">
+          <text class="category-icon">{{item.icon}}</text>
+          <view>
+            <text class="category-title">{{item.category}}</text>
+            <text class="category-desc">剩余 {{item.remaining}} / 预算 {{item.amount}}</text>
+          </view>
+        </view>
+        <text class="category-percent {{item.tone}}">{{item.percent}}%</text>
+      </view>
+      <view class="progress-track small">
+        <view class="progress-fill {{item.tone}}" style="width: {{item.percent}}%; background: {{item.color}};"></view>
+      </view>
+      <view class="category-foot">
+        <text>已花 {{item.spent}}</text>
+        <text wx:if="{{item.remainingCents < 0}}">已超 {{item.overspent}}</text>
+      </view>
+    </view>
+  </view>
+</view>

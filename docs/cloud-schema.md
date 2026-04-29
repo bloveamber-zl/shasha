@@ -7,6 +7,7 @@
 - `accounts`：账户列表，如微信、支付宝、银行卡、现金。
 - `ledger_records`：记账流水。
 - `budgets`：预算，后续实现。
+- `budgets`：预算配置，第一版客户端使用本地默认配置，后续可迁移到云端。
 - `tags`：标签，后续实现。
 
 ## `ledger_records` 字段
@@ -35,9 +36,17 @@
 - `ledgerQuery`：按当前 `openid` 查询账单，支持 `type`、`category`、`startDate`、`endDate`。
 - `ledgerWrite`：支持 `create`、`update`、`delete`，写入前校验参数，更新/删除前校验记录归属。
 
+## `budgets` 字段草案
+
+- `openid`：用户归属，后续云端预算配置写入。
+- `type`：`month` 或 `category`。
+- `amountCents`：预算金额，单位为分。
+- `category`：分类预算对应的分类名称，月度总预算为空。
+- `createdAt`：创建时间。
+- `updatedAt`：更新时间。
+
 ## 客户端策略
 
 - 小程序启动时调用 `initUser` 和 `ledgerQuery`。
 - 云函数调用成功后，页面使用云端 `ledger_records`。
 - 云函数不可用、未部署或权限错误时，自动回落到本地 mock 数据，并在首页/我的页显示“云同步失败，已使用本地数据”。
-

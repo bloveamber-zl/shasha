@@ -47,5 +47,11 @@ Page({
     wx.switchTab({
       url: event.currentTarget.dataset.url
     });
+  },
+
+  goPage(event) {
+    wx.navigateTo({
+      url: event.currentTarget.dataset.url
+    });
   }
 });

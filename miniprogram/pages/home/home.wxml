@@ -30,6 +30,11 @@
       <text class="quick-title">看图表</text>
       <text class="quick-desc">观察收支变化</text>
     </button>
+    <button class="quick-action" bindtap="goPage" data-url="/pages/budget/budget">
+      <text class="quick-icon">🌱</text>
+      <text class="quick-title">看预算</text>
+      <text class="quick-desc">剩余可花</text>
+    </button>
   </view>
 
   <view class="section-title">

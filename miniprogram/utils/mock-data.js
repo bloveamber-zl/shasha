@@ -13,6 +13,14 @@ const categories = [
 
 const accounts = ['微信', '支付宝', '银行卡', '现金'];
 
+const budgets = [
+  { id: 'budget_month_default', type: 'month', amountCents: 650000 },
+  { id: 'budget_food_default', type: 'category', category: '餐饮', amountCents: 180000 },
+  { id: 'budget_traffic_default', type: 'category', category: '交通', amountCents: 50000 },
+  { id: 'budget_shopping_default', type: 'category', category: '购物', amountCents: 120000 },
+  { id: 'budget_fun_default', type: 'category', category: '娱乐', amountCents: 80000 }
+];
+
 const sampleRecords = [
   createLedgerRecord({
     id: 'ledger_demo_001',
@@ -79,6 +87,6 @@ const sampleRecords = [
 module.exports = {
   categories,
   accounts,
+  budgets,
   sampleRecords
 };
-

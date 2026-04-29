@@ -2,6 +2,7 @@
   "pages": [
     "pages/home/home",
     "pages/ledger/ledger",
+    "pages/budget/budget",
     "pages/charts/charts",
     "pages/details/details",
     "pages/mine/mine"

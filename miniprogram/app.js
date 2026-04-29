@@ -1,4 +1,4 @@
-const { sampleRecords, categories, accounts } = require('./utils/mock-data');
+const { sampleRecords, categories, accounts, budgets } = require('./utils/mock-data');
 const { deleteRecordById, sortRecords, upsertRecord } = require('./utils/ledger');
 const { resolveCloudStatus } = require('./utils/cloud-ledger-core');
 const {
@@ -17,7 +17,8 @@ App({
     editingRecordId: '',
     records: sampleRecords,
     categories,
-    accounts
+    accounts,
+    budgets
   },
 
   onLaunch() {
