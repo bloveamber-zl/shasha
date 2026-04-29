@@ -79,7 +79,11 @@ function buildCalendarDays(records, month, selectedDate) {
   do {
     days.push(buildDay(cursor, month, selectedDate, grouped[cursor] || []));
     cursor = getDateOffset(cursor, 1);
-  } while (days.length < 35 || days.at(-1).date.slice(0, 7) === month);
+  } while (
+    days.length < 35 ||
+    days.length % 7 !== 0 ||
+    days[days.length - 1].date.slice(0, 7) === month
+  );
 
   const weeks = [];
   for (let index = 0; index < days.length; index += 7) {

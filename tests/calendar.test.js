@@ -42,6 +42,17 @@ test('buildCalendarViewModel keeps stable leading and trailing days', () => {
   assert.equal(viewModel.selectedDay.records.length, 0);
 });
 
+test('buildCalendarViewModel always returns complete seven-day weeks', () => {
+  for (const month of ['2026-03', '2026-05', '2026-08', '2026-11']) {
+    const viewModel = buildCalendarViewModel([], month, `${month}-01`);
+    const flatDays = viewModel.weeks.flatMap((week) => week.days);
+
+    assert.equal(flatDays.length % 7, 0, month);
+    assert.ok(flatDays.length === 35 || flatDays.length === 42, month);
+    assert.deepEqual(viewModel.weeks.map((week) => week.days.length), Array(viewModel.weeks.length).fill(7), month);
+  }
+});
+
 test('getMonthOffset moves across year boundaries', () => {
   assert.equal(getMonthOffset('2026-01', -1), '2025-12');
   assert.equal(getMonthOffset('2026-12', 1), '2027-01');
