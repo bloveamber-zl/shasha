@@ -5,20 +5,7 @@ const {
   groupRecordsByDate
 } = require('../../utils/ledger');
 const { formatSignedRecord, formatSummary } = require('../../utils/format');
-
-function buildTagNames(records) {
-  const tags = [];
-  const seen = new Set();
-  (records || []).forEach((record) => {
-    (record.tags || []).forEach((tag) => {
-      if (!seen.has(tag)) {
-        seen.add(tag);
-        tags.push(tag);
-      }
-    });
-  });
-  return ['全部'].concat(tags);
-}
+const { buildTagOptions } = require('../../utils/manage');
 
 Page({
   data: {
@@ -47,7 +34,7 @@ Page({
     await app.ensureCloudData();
     const categoryNames = ['全部'].concat((app.globalData.categories || []).map((item) => item.name));
     const accountNames = ['全部'].concat(app.globalData.accounts || []);
-    const tagNames = buildTagNames(app.globalData.records || []);
+    const tagNames = ['全部'].concat(buildTagOptions(app.globalData.tags || [], app.globalData.records || []));
     this.setData({
       categoryNames,
       accountNames,

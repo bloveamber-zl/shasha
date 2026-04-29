@@ -1,0 +1,72 @@
+<view class="page manage-page">
+  <view class="manage-tabs paper-card">
+    <button
+      wx:for="{{tabs}}"
+      wx:key="value"
+      class="manage-tab {{activeTab === item.value ? 'active' : ''}}"
+      bindtap="onTabTap"
+      data-value="{{item.value}}"
+    >
+      {{item.label}}
+    </button>
+  </view>
+
+  <view class="form-card paper-card">
+    <view class="type-tabs" wx:if="{{activeTab === 'category'}}">
+      <button
+        wx:for="{{typeTabs}}"
+        wx:key="value"
+        class="type-tab {{categoryType === item.value ? 'active' : ''}}"
+        bindtap="onTypeTap"
+        data-value="{{item.value}}"
+      >
+        {{item.label}}
+      </button>
+    </view>
+    <view class="form-row">
+      <text>名称</text>
+      <input value="{{nameText}}" placeholder="输入名称" bindinput="onNameInput" />
+    </view>
+    <view class="form-row" wx:if="{{activeTab === 'category'}}">
+      <text>图标</text>
+      <input value="{{iconText}}" maxlength="2" placeholder="可选，如 ☕" bindinput="onIconInput" />
+    </view>
+    <view class="form-row" wx:if="{{activeTab === 'category'}}">
+      <text>颜色</text>
+      <input value="{{colorText}}" placeholder="可选，如 #79A86D" bindinput="onColorInput" />
+    </view>
+    <button class="primary-button add-button" bindtap="addItem">添加</button>
+  </view>
+
+  <view class="section-title">
+    <text wx:if="{{activeTab === 'category'}}">分类列表</text>
+    <text wx:elif="{{activeTab === 'account'}}">账户列表</text>
+    <text wx:else>标签列表</text>
+    <text class="muted">本地配置</text>
+  </view>
+
+  <view class="list-card paper-card" wx:if="{{activeTab === 'category'}}">
+    <view class="list-item" wx:for="{{categories}}" wx:key="id">
+      <text class="item-icon" style="background: {{item.color}}22;">{{item.icon}}</text>
+      <view class="item-copy">
+        <text class="item-title">{{item.name}}</text>
+        <text class="item-desc">{{item.type === 'income' ? '收入分类' : '支出分类'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="list-card paper-card" wx:elif="{{activeTab === 'account'}}">
+    <view class="list-item compact" wx:for="{{accounts}}" wx:key="*this">
+      <text class="item-icon">💳</text>
+      <view class="item-copy">
+        <text class="item-title">{{item}}</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="list-card paper-card" wx:else>
+    <view class="tag-list">
+      <text class="tag-pill" wx:for="{{tags}}" wx:key="*this">{{item}}</text>
+    </view>
+  </view>
+</view>

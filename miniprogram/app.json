@@ -4,6 +4,7 @@
     "pages/ledger/ledger",
     "pages/budget/budget",
     "pages/calendar/calendar",
+    "pages/manage/manage",
     "pages/charts/charts",
     "pages/details/details",
     "pages/mine/mine"

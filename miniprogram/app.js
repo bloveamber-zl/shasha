@@ -1,5 +1,6 @@
-const { sampleRecords, categories, accounts, budgets } = require('./utils/mock-data');
+const { sampleRecords, categories, accounts, tags, budgets } = require('./utils/mock-data');
 const { deleteRecordById, sortRecords, upsertRecord } = require('./utils/ledger');
+const { addAccount, addCategory, addTag } = require('./utils/manage');
 const { resolveCloudStatus } = require('./utils/cloud-ledger-core');
 const {
   initCloudUser,
@@ -18,10 +19,13 @@ App({
     records: sampleRecords,
     categories,
     accounts,
+    tags,
     budgets
   },
 
   onLaunch() {
+    this.loadManagedConfig();
+
     if (wx.cloud) {
       wx.cloud.init({
         traceUser: true
@@ -61,6 +65,47 @@ App({
     const id = this.globalData.editingRecordId;
     this.globalData.editingRecordId = '';
     return id ? this.findLedgerRecord(id) : null;
+  },
+
+  addManagedCategory(input) {
+    this.globalData.categories = addCategory(this.globalData.categories || [], input);
+    this.persistManagedConfig();
+    return this.globalData.categories;
+  },
+
+  addManagedAccount(name) {
+    this.globalData.accounts = addAccount(this.globalData.accounts || [], name);
+    this.persistManagedConfig();
+    return this.globalData.accounts;
+  },
+
+  addManagedTag(name) {
+    this.globalData.tags = addTag(this.globalData.tags || [], name);
+    this.persistManagedConfig();
+    return this.globalData.tags;
+  },
+
+  loadManagedConfig() {
+    try {
+      const config = wx.getStorageSync('shasha_managed_config') || {};
+      this.globalData.categories = config.categories || this.globalData.categories;
+      this.globalData.accounts = config.accounts || this.globalData.accounts;
+      this.globalData.tags = config.tags || this.globalData.tags;
+    } catch (error) {
+      this.globalData.tags = this.globalData.tags || [];
+    }
+  },
+
+  persistManagedConfig() {
+    try {
+      wx.setStorageSync('shasha_managed_config', {
+        categories: this.globalData.categories || [],
+        accounts: this.globalData.accounts || [],
+        tags: this.globalData.tags || []
+      });
+    } catch (error) {
+      this.setCloudStatus(error);
+    }
   },
 
   async loadCloudRecords() {

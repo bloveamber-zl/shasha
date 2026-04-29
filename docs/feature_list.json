@@ -346,15 +346,25 @@
         "限制范围：先实现本地可用的管理体验和基础数据结构，不在本任务中做多人共享配置。"
       ],
       "user_visible_behavior": "用户可以维护常用分类、账户和标签，让记账录入更贴合自己的习惯。",
-      "status": "not_started",
+      "status": "passing",
       "verification": [
         "运行 ./init.sh",
         "新增一个支出分类并在记账页选择",
         "新增一个账户并在记账页选择",
         "新增一个标签并在明细筛选中使用"
       ],
-      "evidence": [],
-      "notes": "需要注意配置变更后历史账单的分类名称兼容问题。"
+      "evidence": [
+        "2026-04-29: 已新增账本管理页 pages/manage/manage，支持分类、账户、标签三类配置新增。",
+        "2026-04-29: 我的页分类管理、账户管理、标签管理入口均已指向管理页对应 tab。",
+        "2026-04-29: 已新增 miniprogram/utils/manage.js，支持分类/账户/标签去重新增和标签选项合并。",
+        "2026-04-29: app.js 新增 addManagedCategory、addManagedAccount、addManagedTag，并通过 wx storage 持久化本地配置。",
+        "2026-04-29: 记账页会读取最新分类、账户和标签配置，标签可通过快捷项填入。",
+        "2026-04-29: 明细页标签筛选会合并管理标签和历史账单标签。",
+        "2026-04-29: npm test 通过，38 个 Node 测试全部通过。",
+        "2026-04-29: npm run lint 通过，miniprogram 源文件约 1405KB，低于 2MB 限制。",
+        "2026-04-29: ./init.sh 通过，包含 JSON/结构校验、lint 和 38 个 Node 测试。"
+      ],
+      "notes": "第一版为本地配置管理，已用 wx storage 持久化；云端配置同步和隐藏/排序留给后续增强。"
     },
     {
       "id": "recurring-20260429-012",

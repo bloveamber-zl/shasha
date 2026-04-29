@@ -59,6 +59,9 @@
     <view class="note-row">
       <text>标签</text>
       <input class="tag-input" value="{{tagText}}" placeholder="午餐，通勤，可用逗号分隔" bindinput="onTagInput" />
+      <view class="tag-presets" wx:if="{{tagOptions.length > 0}}">
+        <button wx:for="{{tagOptions}}" wx:key="*this" bindtap="onTagPresetTap" data-tag="{{item}}">{{item}}</button>
+      </view>
     </view>
     <view class="note-row">
       <text>备注</text>

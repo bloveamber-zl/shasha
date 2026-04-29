@@ -155,6 +155,24 @@
   font-size: 28rpx;
 }
 
+.tag-presets {
+  display: flex;
+  margin-top: 14rpx;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.tag-presets button {
+  height: 50rpx;
+  padding: 0 18rpx;
+  border-radius: 999rpx;
+  color: #4F6D45;
+  font-size: 22rpx;
+  font-weight: 800;
+  line-height: 50rpx;
+  background: rgba(107, 139, 89, 0.12);
+}
+
 textarea {
   width: 100%;
   min-height: 92rpx;

@@ -25,6 +25,7 @@ Page({
     activeCategory: '',
     accounts: [],
     accountIndex: 0,
+    tagOptions: [],
     date: '',
     note: '',
     tagText: '',
@@ -48,9 +49,15 @@ Page({
   async onShow() {
     const app = getApp();
     await app.ensureCloudData();
+    this.setData({
+      accounts: app.globalData.accounts || [],
+      tagOptions: app.globalData.tags || []
+    });
     const editingRecord = app.consumeEditingRecord();
     if (editingRecord) {
       this.loadEditingRecord(editingRecord);
+    } else {
+      this.updateCategories(this.data.activeType, this.data.activeCategory);
     }
   },
 
@@ -111,6 +118,14 @@ Page({
   onTagInput(event) {
     this.setData({
       tagText: event.detail.value
+    });
+  },
+
+  onTagPresetTap(event) {
+    const tag = event.currentTarget.dataset.tag;
+    const tags = parseTagText(`${this.data.tagText} ${tag}`);
+    this.setData({
+      tagText: tags.join('，')
     });
   },
 

@@ -13,6 +13,8 @@ const categories = [
 
 const accounts = ['微信', '支付宝', '银行卡', '现金'];
 
+const tags = ['固定', '午餐', '通勤', '日用', '周末', '礼物'];
+
 const budgets = [
   { id: 'budget_month_default', type: 'month', amountCents: 650000 },
   { id: 'budget_food_default', type: 'category', category: '餐饮', amountCents: 180000 },
@@ -87,6 +89,7 @@ const sampleRecords = [
 module.exports = {
   categories,
   accounts,
+  tags,
   budgets,
   sampleRecords
 };
